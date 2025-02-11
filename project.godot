@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 BoardState="*res://states/board_state.gd"
 Constants="*res://globals/constants.gd"
+SpriteMap="*res://globals/sprite_map.gd"
 
 [dotnet]
 

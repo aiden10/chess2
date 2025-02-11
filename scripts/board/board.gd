@@ -40,17 +40,21 @@ func draw_board() -> void:
 	for child in get_children():
 		child.queue_free()
 	
-	for row in BoardState.ROWS:
-		for col in BoardState.COLS:
+	for row in BoardState.board.size():
+		for col in BoardState.board[row].size():
 			var tile = tile_scene.instantiate()
 			var color = Color.WHITE if (row + col) % 2 == 0 else Color.BLACK
-			
+			var piece = BoardState.board[row][col]
+			var sprite = null
+			if piece != 0:
+				sprite = load(SpriteMap.SPRITE_MAP[piece])
 			# Set tile properties
 			tile.position = Vector2(col * offset.x, row * offset.y)
 			tile.color = color
 			tile.size = tile_size
 			tile.row = row
 			tile.col = col
+			tile.sprite = sprite
 			
 			# Set up mouse detection
 			var collision_shape = CollisionShape2D.new()
