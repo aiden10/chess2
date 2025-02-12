@@ -15,23 +15,6 @@ Add attack ranges for all pieces
 Figure out how to incorporate that into the attack logic
 
 Attack logic
-    If there is a non friendly piece in the valid move positions, it can be attacked
-    Add a function to the Piece class to get the attackable tile positions (Vector2i array)
-    selection_handler():
-        ## Can attack the selected piece
-        if GameState.selected_piece and other_piece:
-            if Vector2i(row, col) in GameState.selected_piece.attack_targets():
-                var dead = other_piece.take_damage(GameState.selected_piece.strength)
-                if dead:
-                    ## Move the attacker to the dead piece's position
-                    BoardState.board[row][col] = GameState.selected_piece
-                    GameState.selected_piece.position = Vector2i(row, col)
-
-                if GameState.selected_piece.position in other_piece.attack_targets():
-                    var attacker_dead = GameState.selected_piece.take_damage(other_piece.strength)
-                    if attacker_dead:
-                        GameState.board[GameState.selected_piece.position.x][GameState.selected_piece.position.y] = null
-    
     While a piece is selected, its attackable tiles are shown colored red. If a piece is in one of the attackable tiles, it should pulse reddish, going from
     transparent and opaque.
     If you then hover over one of those attackable pieces, your selected piece will appear pulsing transparent and opaque in the position it would move to

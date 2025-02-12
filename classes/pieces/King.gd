@@ -55,8 +55,7 @@ func attack_targets() -> Array[Vector2i]:
 		if other_piece:
 			var x_diff: int = abs(position.x - new_pos.x) 
 			var y_diff: int = abs(position.y - new_pos.y) 
-			if (new_pos.x >= 0 and new_pos.x < 8 and new_pos.y >= 0 and new_pos.y < 8
-			 and other_piece.color != color and x_diff <= attack_range and y_diff <= attack_range):
+			if (other_piece.color != color and x_diff <= attack_range and y_diff <= attack_range):
 				valid_targets.append(new_pos)
 
 	return valid_targets

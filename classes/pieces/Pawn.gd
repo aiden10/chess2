@@ -35,23 +35,23 @@ func can_move_to() -> Array[Vector2i]:
 
 func attack_targets() -> Array[Vector2i]:
 	var valid_targets: Array[Vector2i] = []
-	var moves = [
-		Vector2i(1, 1),  # Diagonal right
-		Vector2i(-1, 1), # Diagonal left
+	var direction = 1 if color == PieceColor.WHITE else -1
+	var moves: Array[Vector2i]
+	moves = [
+		Vector2i(direction, 1), Vector2i(direction, -1),
 	]
 	
 	for move in moves:
 		var new_pos = Vector2i(position.x + move.x, position.y + move.y)
 		## Ignore out of bounds
 		if new_pos.x < 0 or new_pos.x >= BoardState.COLS or new_pos.y < 0 or new_pos.y >= BoardState.COLS:
-			break
+			continue
 			
 		var other_piece: Piece = BoardState.board[new_pos.x][new_pos.y]
 		if other_piece:
-			var x_diff: int = abs(position.x - new_pos.x) 
-			var y_diff: int = abs(position.y - new_pos.y) 
-			if (new_pos.x >= 0 and new_pos.x < 8 and new_pos.y >= 0 and new_pos.y < 8
-			 and other_piece.color != color and x_diff <= attack_range and y_diff <= attack_range):
+			var x_diff: int = abs(position.x - new_pos.x)
+			var y_diff: int = abs(position.y - new_pos.y)
+			if (other_piece.color != color and x_diff <= attack_range and y_diff <= attack_range):
 				valid_targets.append(new_pos)
 
 	return valid_targets

@@ -49,8 +49,7 @@ func attack_targets() -> Array[Vector2i]:
 			
 		var other_piece: Piece = BoardState.board[new_pos.x][new_pos.y]
 		if other_piece:
-			if (new_pos.x >= 0 and new_pos.x < 8 and new_pos.y >= 0 and new_pos.y < 8
-			 and other_piece.color != color):
+			if (other_piece.color != color):
 				valid_targets.append(new_pos)
 
 	return valid_targets

@@ -10,10 +10,10 @@ func _ready() -> void:
 func end_turn() -> void:
 	## Alternate between 0 and 1
 	GameState.turn = int(!bool(GameState.turn))
+	GameState.selected_piece = null
 	print("Turn: " + Piece.PieceColor.keys()[GameState.turn])
 
 func selection_handler(other_piece: Piece, row: int, col: int) -> void:
-	
 	## Basically just toggling the selection
 	if other_piece == GameState.selected_piece:
 		GameState.selected_piece = null
@@ -42,10 +42,37 @@ func move(other_piece: Piece, row: int, col: int) -> void:
 		BoardState.board[GameState.selected_piece.position.x][GameState.selected_piece.position.y] = null
 		GameState.selected_piece.position = Vector2i(row, col)
 		GameState.selected_piece.has_moved = true
-		GameState.selected_piece = null
 		end_turn()
 
 func attack(other_piece: Piece, row: int, col: int) -> void:
-	print("attacking")
-	GameState.selected_piece = null
-	pass
+	var selected_piece: Piece = GameState.selected_piece
+	if selected_piece and other_piece:
+		if Vector2i(row, col) in selected_piece.attack_targets():
+			var prev_position = selected_piece.position
+			
+			## Calculate if this is a mutual attack
+			var counter_attack = prev_position in other_piece.attack_targets()
+			
+			## Apply damage both ways if it's a mutual attack
+			var defender_dead = other_piece.take_damage(selected_piece.strength)
+			var attacker_dead = false
+			if counter_attack:
+				attacker_dead = selected_piece.take_damage(other_piece.strength)
+			
+			## Handle piece removal and movement based on what died
+			## Both pieces died - clear both positions
+			if defender_dead and attacker_dead:
+				BoardState.board[selected_piece.position.x][selected_piece.position.y] = null
+				BoardState.board[row][col] = null
+
+			## Only defender died - move attacker to new position
+			elif defender_dead and not attacker_dead:
+				BoardState.board[selected_piece.position.x][selected_piece.position.y] = null
+				BoardState.board[row][col] = selected_piece
+				selected_piece.position = Vector2i(row, col)
+			
+			## Only attacker died - just remove it from its position
+			elif attacker_dead and not defender_dead:
+				BoardState.board[selected_piece.position.x][selected_piece.position.y] = null
+			
+			end_turn()
