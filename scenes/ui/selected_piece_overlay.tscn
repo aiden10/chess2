@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://donmyumd0j62i"]
+
+[ext_resource type="Script" path="res://scripts/ui/overlay.gd" id="1_jbhom"]
+[ext_resource type="PackedScene" uid="uid://bc1tb3p5q52up" path="res://scenes/ui/ability_card.tscn" id="1_r2sha"]
+
+[node name="SelectedPieceOverlay" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jbhom")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Strength" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Portrait" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Health" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="PieceType" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+text = "sample text"
+
+[node name="PassiveCard" parent="VBoxContainer" instance=ExtResource("1_r2sha")]
+layout_mode = 2
+
+[node name="PrimaryCard" parent="VBoxContainer" instance=ExtResource("1_r2sha")]
+layout_mode = 2
+
+[node name="UltimateCard" parent="VBoxContainer" instance=ExtResource("1_r2sha")]
+layout_mode = 2

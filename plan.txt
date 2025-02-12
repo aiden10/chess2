@@ -1,0 +1,32 @@
+
+Chess but different pieces have different abilities.
+
+Attacking:
+    Pieces will have health points instead of "killed" instantly like in regular chess.
+    When a piece is attacked, the attacked piece will counterattack if the attacker is in its range.
+    Piece HP can be shown with "hp/max_hp" above or on them. It should be slightly transparent and fully opaque when hovered over.
+
+    When hovering over another piece it should also show you the expected amount of HP that will be lost.
+    The piece that will be attacked should pulse red and if the current piece will be counterattacked it should also 
+    pulse red.
+
+Abilty types:
+    - Passive
+    - Primary
+    - Ultimate
+
+Ability usage:
+    - Passives
+        Automatic, so the user doesn't need to do anything in particular
+    
+    - Primaries and ultimates 
+        Players select the piece they want to move/use
+        Then they select the ability they want to use from the side bar
+        Then the board will be highlighted to show the valid tiles for that ability
+        Lastly, the user clicks on one of the valid tiles to use it
+        If the ability is something automatically used then the user just needs to click on the ability
+
+    Abilities will also have cooldowns, which reset after a certain number of turns. 
+
+Win condition:
+    Kill the opponent's king

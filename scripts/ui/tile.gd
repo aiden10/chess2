@@ -1,15 +1,15 @@
 extends Node2D
 
-@export var color: Color = Color.WHITE
-@export var size: Vector2 = Vector2(Constants.TILE_SIZE, Constants.TILE_SIZE)  # Default tile size
-@export var hover_color_offset: float = 0.2  # How much to brighten on hover
-
+## How much more transparent to make the tile (color.a - hover_color_offset)
+var hover_color_offset: float = Constants.HOVER_COLOR_ALPHA
+var color: Color
+var size: Vector2 = Vector2(Constants.TILE_SIZE, Constants.TILE_SIZE)  # Default tile size
 var is_hovered: bool = false
 var last_color: Color
 var row: int
 var col: int
 var sprite: Texture2D
-
+ 
 func _ready() -> void:
 	last_color = color
 	set_process_input(true)
@@ -18,7 +18,7 @@ func _ready() -> void:
 func set_size(new_size: Vector2) -> void:
 	size = new_size
 	queue_redraw()	
-				
+
 func _draw() -> void:
 	# Draw a rectangle for the tile
 	var rect = Rect2(Vector2.ZERO, size)
@@ -33,7 +33,7 @@ func _draw() -> void:
 		var scaled_size = sprite.get_size() * scale
 		var pos = (size - scaled_size) / 2  # Center the sprite
 		draw_texture_rect(sprite, Rect2(pos, scaled_size), false)
-		
+
 func _on_mouse_entered() -> void:
 	is_hovered = true
 	color = Color(last_color.r, last_color.g, last_color.b, 0.1)
@@ -43,14 +43,18 @@ func _on_mouse_exited() -> void:
 	is_hovered = false
 	color = last_color
 	queue_redraw()
-	
-# Optional: Add interaction handling
+
 func _input_event(_viewport, event, _shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			_on_tile_clicked()
 
+## Updates selected piece and emits a signal to render the piece overlay
 func _on_tile_clicked() -> void:
-	# Handle tile click event
-	print("Clicked: (", row, ", ", col, ")")
-	# You can emit a signal here if you need to communicate with the board
+	var piece: Piece = BoardState.board[row][col]
+	if piece == GameState.selected_piece and piece != null:
+		GameState.selected_piece = null
+	else:
+		GameState.selected_piece = piece
+		
+	EventBus.piece_selected.emit()
