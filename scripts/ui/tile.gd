@@ -9,9 +9,13 @@ var last_color: Color
 var row: int
 var col: int
 var sprite: Texture2D
- 
+
+@onready var health_label: Label = $Panel/PieceHealth
+@onready var panel: Panel = $Panel
+
 func _ready() -> void:
 	last_color = color
+	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_process_input(true)
 	queue_redraw()
 
@@ -33,15 +37,25 @@ func _draw() -> void:
 		var scaled_size = sprite.get_size() * scale
 		var pos = (size - scaled_size) / 2  # Center the sprite
 		draw_texture_rect(sprite, Rect2(pos, scaled_size), false)
-
+	
+	var piece: Piece = BoardState.board[row][col]
+	if piece:
+		health_label.visible = true
+		panel.visible = true
+		health_label.text = str(piece.health) + "/" + str(piece.max_hp)
+	else:
+		health_label.text = ""
+		health_label.visible = false
+		panel.visible = false
+		
 func _on_mouse_entered() -> void:
-	is_hovered = true
 	color = Color(last_color.r, last_color.g, last_color.b, 0.1)
+	EventBus.tile_entered.emit(BoardState.board[row][col], row, col)
 	queue_redraw()
 
 func _on_mouse_exited() -> void:
-	is_hovered = false
 	color = last_color
+	EventBus.tile_exited.emit()
 	queue_redraw()
 
 func _input_event(_viewport, event, _shape_idx):
@@ -51,6 +65,5 @@ func _input_event(_viewport, event, _shape_idx):
 
 ## Emits signals to update the UI and process the event
 func _on_tile_clicked() -> void:
-	var other_piece: Piece = BoardState.board[row][col]
-	EventBus.tile_clicked.emit(other_piece, row, col)
+	EventBus.tile_clicked.emit(BoardState.board[row][col], row, col)
 	EventBus.piece_selected.emit()

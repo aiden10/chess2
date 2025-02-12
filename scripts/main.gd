@@ -27,6 +27,10 @@ func selection_handler(other_piece: Piece, row: int, col: int) -> void:
 		## Otherwise, it's a valid move
 		else:
 			move(other_piece, row, col)
+
+	elif other_piece and GameState.selected_piece and other_piece.color != GameState.turn:
+		attack(other_piece, row, col)
+
 	## Not moving and not toggling selection, so just update the selected piece
 	else:
 		GameState.selected_piece = other_piece
@@ -41,5 +45,7 @@ func move(other_piece: Piece, row: int, col: int) -> void:
 		GameState.selected_piece = null
 		end_turn()
 
-func attack(position: Piece, row: int, col: int) -> void:
+func attack(other_piece: Piece, row: int, col: int) -> void:
+	print("attacking")
+	GameState.selected_piece = null
 	pass

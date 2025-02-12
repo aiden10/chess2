@@ -10,6 +10,8 @@ Attacking:
     The piece that will be attacked should pulse red and if the current piece will be counterattacked it should also 
     pulse red.
 
+    Able to attack your own pieces?
+
 Abilty types:
     - Passive
     - Primary
@@ -48,11 +50,12 @@ Abilities:
         Knight:
             - 
         Bishop:
-            -
+            - Heal: Heal friendly pieces adjacent pieces
         Rook:
-            -
+            - Snipe/Blast: Shoot a projectile
+            - Barricade: Place a Wall within attack range
         Queen:
-            -
+            - 
         King:
             - 
     Ultimates:
@@ -67,7 +70,8 @@ Abilities:
         Queen:
             - Birth: Spawn a pawn in an adjacent position (Only usable while adjacent to a friendly king)
         King:
-            - 
+            - Enknighten: Turns an adjacent pawn into a knight
 
 Win condition:
-    Kill the opponent's king
+    Kill the opponent's king or checkmate
+

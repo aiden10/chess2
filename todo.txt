@@ -11,6 +11,9 @@ Make pieces movable
                 ## Update board to the new piece's position
                 BoardState.board[row][col] = GameState.selected_piece
 
+Add attack ranges for all pieces
+Figure out how to incorporate that into the attack logic
+
 Attack logic
     If there is a non friendly piece in the valid move positions, it can be attacked
     Add a function to the Piece class to get the attackable tile positions (Vector2i array)
@@ -28,6 +31,28 @@ Attack logic
                     var attacker_dead = GameState.selected_piece.take_damage(other_piece.strength)
                     if attacker_dead:
                         GameState.board[GameState.selected_piece.position.x][GameState.selected_piece.position.y] = null
-                        
+    
+    While a piece is selected, its attackable tiles are shown colored red. If a piece is in one of the attackable tiles, it should pulse reddish, going from
+    transparent and opaque.
+    If you then hover over one of those attackable pieces, your selected piece will appear pulsing transparent and opaque in the position it would move to
+    to attack the enemy hovered piece. 
+    If the attacker is also in the attacked piece's attack_targets, then the attacker will pulse reddish and transparent to opaque.
+
 Abilities
+    Store abilities in different JSON files which get loaded in a global script.
+    Format:
+        {
+            0 : {
+                    "passives": ["name": "name here", "description": "description here", "image": "image_path", "function_name": "function name"],
+                    },
+            "Rook": {"passives": []},
+            ...
+        }
+
+    The values will be iterated over and Ability objects will be created:
+        passive_ability_dict = {}
+        for piece_type, value in passives_json:
+            for passive_dict in value:
+                var passive = PassiveAbility(value["name"], value["description"], value["image"], value["function_name"])
+                passive_ability_dict.update({piece_type: passive})
 

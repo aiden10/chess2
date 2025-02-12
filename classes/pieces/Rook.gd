@@ -6,6 +6,8 @@ func _init(piece_color: PieceColor) -> void:
 	super._init(PieceType.ROOK, piece_color)
 	self.strength = Constants.ROOK_STRENGTH
 	self.health = Constants.ROOK_HP
+	self.max_hp = Constants.ROOK_HP
+	self.attack_range = Constants.BISHOP_RANGE
 	self.passive = passive_ability
 	self.primary = primary_ability
 	self.ultimate = ultimate_ability
@@ -14,24 +16,62 @@ func _init(piece_color: PieceColor) -> void:
 	else:
 		self.texture = load("res://resources/sprites/black/rook1.png")
 
-func passive_ability() -> void:
-	pass
-
-func primary_ability() -> void:
-	pass
-
-func ultimate_ability() -> void:
-	pass
-
 ## Returns a list of positions that this piece can move to
 func can_move_to() -> Array[Vector2i]:
+	var directions = [
+		Vector2i(0, 1),   # Up
+		Vector2i(0, -1),  # Down 
+		Vector2i(-1, 0),  # Left
+		Vector2i(1, 0)  # Right
+	]
 	var valid_moves: Array[Vector2i] = []
-
-	# Horizontal and vertical moves
-	for i in range(8):
-		if i != position.x:
-			valid_moves.append(Vector2i(i, position.y))  # Horizontal
-		if i != position.y:
-			valid_moves.append(Vector2i(position.x, i))  # Vertical
+	for direction in directions:
+		for i in range(1, BoardState.COLS):
+			var pos = Vector2i(
+				position.x + (direction.x * i),
+				position.y + (direction.y * i)
+			)
 			
+			# Check if position is out of bounds
+			if pos.x < 0 or pos.x >= BoardState.COLS or pos.y < 0 or pos.y >= BoardState.COLS:
+				break  # Stop checking this direction if we're out of bounds
+				
+			# Check if there's a piece at this position
+			if BoardState.board[pos.x][pos.y] != null:
+				break # Stop checking this direction if a piece is in the way
+				
+			valid_moves.append(pos)
+	
 	return valid_moves
+	
+func attack_targets() -> Array[Vector2i]:
+	var directions = [
+		Vector2i(0, 1),   # Up
+		Vector2i(0, -1),  # Down 
+		Vector2i(-1, 0),  # Left
+		Vector2i(1, 0)  # Right
+	]
+	var valid_targets: Array[Vector2i] = []
+	for direction in directions:
+		for i in range(1, self.attack_range):
+			var pos = Vector2i(
+				position.x + (direction.x * i),
+				position.y + (direction.y * i)
+			)
+			# Check if position is out of bounds
+			if pos.x < 0 or pos.x >= BoardState.COLS or pos.y < 0 or pos.y >= BoardState.COLS:
+				break  # Stop checking this direction if we're out of bounds
+			
+			var other_piece: Piece = BoardState.board[pos.x][pos.y]
+
+			if other_piece != null:
+				if other_piece.color == color:
+					break
+				var x_diff: int = abs(position.x - pos.x) 
+				var y_diff: int = abs(position.y - pos.y) 
+				if other_piece.color != color and x_diff <= attack_range and y_diff <= attack_range:
+					valid_targets.append(pos)
+					break # Stop checking this direction after a piece is reached
+				
+	return valid_targets
+	

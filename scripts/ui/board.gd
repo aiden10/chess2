@@ -45,8 +45,10 @@ func draw_board() -> void:
 	for child in get_children():
 		child.queue_free()
 	var valid_movement_tiles: Array[Vector2i] 
+	var valid_attack_tiles: Array[Vector2i]
 	if GameState.selected_piece:
 		valid_movement_tiles = GameState.selected_piece.can_move_to()
+		valid_attack_tiles = GameState.selected_piece.attack_targets()
 		
 	for row in BoardState.board.size():
 		for col in BoardState.board[row].size():
@@ -56,6 +58,8 @@ func draw_board() -> void:
 			if GameState.selected_piece != null:
 				if Vector2i(row, col) in valid_movement_tiles:
 					color = Constants.VALID_MOVE_TILE_COLOR
+				if Vector2i(row, col) in valid_attack_tiles:
+					color = Constants.VALID_ATTACK_TILE_COLOR
 			
 			var piece: Piece = BoardState.board[row][col]
 			var sprite = null
