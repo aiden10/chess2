@@ -1,4 +1,7 @@
 extends Node
 
 signal piece_selected
-signal move(position, row, col)
+signal tile_clicked(other_piece, row, col)
+
+## For any UI things that would happen on hit
+signal piece_hit(piece, row, col)

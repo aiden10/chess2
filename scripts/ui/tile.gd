@@ -49,19 +49,8 @@ func _input_event(_viewport, event, _shape_idx):
 		if event.button_index == MOUSE_BUTTON_LEFT and event.pressed:
 			_on_tile_clicked()
 
-## Updates selected piece and emits a signal to render the piece overlay
+## Emits signals to update the UI and process the event
 func _on_tile_clicked() -> void:
-	var position: Piece = BoardState.board[row][col]
-	if position == GameState.selected_piece:
-		GameState.selected_piece = null
-	## Move
-	elif not position and GameState.selected_piece and GameState.selected_piece.color == GameState.turn:
-		## Deselect piece if they select an empty tile that cannot be moved to 
-		if Vector2i(row, col) not in GameState.selected_piece.can_move_to():
-			GameState.selected_piece = null
-		else:
-			EventBus.move.emit(position, row, col)
-	else:
-		GameState.selected_piece = position
-	
+	var other_piece: Piece = BoardState.board[row][col]
+	EventBus.tile_clicked.emit(other_piece, row, col)
 	EventBus.piece_selected.emit()

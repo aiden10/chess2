@@ -37,5 +37,5 @@ func can_move_to() -> Array[Vector2i]:
 		var double_forward = Vector2i(position.x + (2 * direction), position.y)
 		if double_forward.x >= 0 and double_forward.x < 8:
 			valid_moves.append(double_forward)
-
+			
 	return valid_moves

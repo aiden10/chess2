@@ -37,5 +37,8 @@ func take_damage(amount: int) -> bool:
 func can_move_to() -> Array[Vector2i]:
 	return []
 
+func attack_targets() -> Array[Vector2i]:
+	return []
+
 func _to_string() -> String:
 	return str(PieceColor.keys()[color]) + " " + str(PieceType.keys()[type])
