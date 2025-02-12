@@ -23,5 +23,20 @@ func primary_ability() -> void:
 func ultimate_ability() -> void:
 	pass
 
-func can_move_to(from_pos: Vector2i, to_pos: Vector2i, board: Array) -> bool:
-	return true
+func can_move_to() -> Array[Vector2i]:
+	var valid_moves: Array[Vector2i] = []
+	
+	# Diagonal moves in all directions
+	for i in range(1, 8):
+		var positions = [
+			Vector2i(position.x + i, position.y + i),  # Up-right
+			Vector2i(position.x + i, position.y - i),  # Down-right
+			Vector2i(position.x - i, position.y + i),  # Up-left
+			Vector2i(position.x - i, position.y - i)   # Down-left
+		]
+		
+		for pos in positions:
+			if pos.x >= 0 and pos.x < 8 and pos.y >= 0 and pos.y < 8:
+				valid_moves.append(pos)
+				
+	return valid_moves

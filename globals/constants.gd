@@ -3,6 +3,8 @@ extends Node
 const TILE_SIZE: int = 64
 const HOVER_COLOR_ALPHA = 0.2
 const SPRITE_SIZE: float = 1.25
+const VALID_MOVE_TILE_COLOR = Color.AQUAMARINE
+const VALID_ATTACK_TILE_COLOR = Color.CRIMSON
 
 const PAWN_HP = 2
 const PAWN_STRENGTH = 1

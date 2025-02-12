@@ -22,7 +22,8 @@ var has_moved: bool = false
 var passive: Callable
 var primary: Callable
 var ultimate: Callable
-var texture: Texture2D  
+var texture: Texture2D
+var position: Vector2i
 
 func _init(piece_type: PieceType, piece_color: PieceColor) -> void:
 	type = piece_type
@@ -32,10 +33,9 @@ func take_damage(amount: int) -> bool:
 	health -= amount
 	return health <= 0  # Return true if piece is defeated
 
-func can_move_to(from_pos: Vector2i, to_pos: Vector2i, board: Array) -> bool:
-	# Base movement validation
-	# Child classes will override this with specific movement patterns
-	return true
+# Child classes will override this with specific movement patterns
+func can_move_to() -> Array[Vector2i]:
+	return []
 
 func _to_string() -> String:
 	return str(PieceColor.keys()[color]) + " " + str(PieceType.keys()[type])

@@ -19,6 +19,8 @@ func draw_overlay():
 		piece_label.text = GameState.selected_piece.to_string()
 		health_label.text = "HP: " + str(GameState.selected_piece.health)
 		strength_label.text = "ATK: " + str(GameState.selected_piece.strength)
+		portrait.texture = GameState.selected_piece.texture
+		
 	else:
 		## Hide overlay
 		visible = false

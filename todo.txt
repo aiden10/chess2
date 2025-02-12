@@ -1,0 +1,16 @@
+Make pieces movable
+    In draw_board:
+        if GameState.selected_piece:
+            var movable_tiles: Array[Vector2i] = GameState.selected_piece.can_move_to()
+            if Vector2i(row, col) in movable_tiles:
+                tile.color = Constants.VALID_TILE_COLOR    
+    
+    In on_tile_clicked:
+        if GameState.selected_piece:
+            if Vector2i(row, col) in GameState.selected_piece.can_move_to():
+                ## Update board to the new piece's position
+                BoardState.board[row][col] = GameState.selected_piece
+
+Make actions less attached to the tile script
+
+Attack logic

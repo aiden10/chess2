@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Board
+
 var tile_scene = preload("res://scenes/tile.tscn")
 @export var board_margin: float = 50.0  # Margin from screen edges
 
@@ -7,10 +9,13 @@ var tile_scene = preload("res://scenes/tile.tscn")
 var tile_size: Vector2
 var offset: Vector2
 
-func _ready() -> void:
-	populate_board()
+func initialize() -> void:
 	# Connect to window resize signal
 	get_tree().root.size_changed.connect(_on_window_resize)
+	
+	# Also redraw the board to show valid tiles
+	EventBus.piece_selected.connect(draw_board)
+	
 	_calculate_tile_size()
 	draw_board()
 	
@@ -39,11 +44,19 @@ func draw_board() -> void:
 	# Clear existing tiles
 	for child in get_children():
 		child.queue_free()
-	
+	var valid_movement_tiles: Array[Vector2i] 
+	if GameState.selected_piece:
+		valid_movement_tiles = GameState.selected_piece.can_move_to()
+		
 	for row in BoardState.board.size():
 		for col in BoardState.board[row].size():
 			var tile = tile_scene.instantiate()
 			var color = Color.WHITE if (row + col) % 2 == 0 else Color.BLACK
+			
+			if GameState.selected_piece != null:
+				if Vector2i(row, col) in valid_movement_tiles:
+					color = Constants.VALID_MOVE_TILE_COLOR
+			
 			var piece: Piece = BoardState.board[row][col]
 			var sprite = null
 			if piece != null:
@@ -80,52 +93,3 @@ func draw_board() -> void:
 func _on_window_resize() -> void:
 	_calculate_tile_size()
 	draw_board()
-
-func populate_board():
-	# White pieces back row (from left to right: 0,0 to 7,0)
-	var white_rook1 = Rook.new(Piece.PieceColor.WHITE)
-	var white_knight1 = Knight.new(Piece.PieceColor.WHITE)
-	var white_bishop1 = Bishop.new(Piece.PieceColor.WHITE)
-	var white_queen = Queen.new(Piece.PieceColor.WHITE)
-	var white_king = King.new(Piece.PieceColor.WHITE)
-	var white_bishop2 = Bishop.new(Piece.PieceColor.WHITE)
-	var white_knight2 = Knight.new(Piece.PieceColor.WHITE)
-	var white_rook2 = Rook.new(Piece.PieceColor.WHITE)
-
-	BoardState.board[0][0] = white_rook1
-	BoardState.board[0][1] = white_knight1
-	BoardState.board[0][2] = white_bishop1
-	BoardState.board[0][3] = white_queen
-	BoardState.board[0][4] = white_king
-	BoardState.board[0][5] = white_bishop2
-	BoardState.board[0][6] = white_knight2
-	BoardState.board[0][7] = white_rook2
-
-	# White pawns (row 1)
-	for col in range(BoardState.COLS):
-		var white_pawn = Pawn.new(Piece.PieceColor.WHITE)
-		BoardState.board[1][col] = white_pawn
-
-	# Black pieces back row (from left to right: 0,7 to 7,7)
-	var black_rook1 = Rook.new(Piece.PieceColor.BLACK)
-	var black_knight1 = Knight.new(Piece.PieceColor.BLACK)
-	var black_bishop1 = Bishop.new(Piece.PieceColor.BLACK)
-	var black_queen = Queen.new(Piece.PieceColor.BLACK)
-	var black_king = King.new(Piece.PieceColor.BLACK)
-	var black_bishop2 = Bishop.new(Piece.PieceColor.BLACK)
-	var black_knight2 = Knight.new(Piece.PieceColor.BLACK)
-	var black_rook2 = Rook.new(Piece.PieceColor.BLACK)
-
-	BoardState.board[7][0] = black_rook1
-	BoardState.board[7][1] = black_knight1
-	BoardState.board[7][2] = black_bishop1
-	BoardState.board[7][3] = black_queen
-	BoardState.board[7][4] = black_king
-	BoardState.board[7][5] = black_bishop2
-	BoardState.board[7][6] = black_knight2
-	BoardState.board[7][7] = black_rook2
-
-	# Black pawns (row 6)
-	for col in range(BoardState.COLS):
-		var black_pawn = Pawn.new(Piece.PieceColor.BLACK)
-		BoardState.board[6][col] = black_pawn

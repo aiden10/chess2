@@ -23,5 +23,18 @@ func primary_ability() -> void:
 func ultimate_ability() -> void:
 	pass
 
-func can_move_to(from_pos: Vector2i, to_pos: Vector2i, board: Array) -> bool:
-	return true
+func can_move_to() -> Array[Vector2i]:
+	var valid_moves: Array[Vector2i] = []
+	var knight_moves = [
+		Vector2i(2, 1), Vector2i(2, -1),
+		Vector2i(-2, 1), Vector2i(-2, -1),
+		Vector2i(1, 2), Vector2i(1, -2),
+		Vector2i(-1, 2), Vector2i(-1, -2)
+	]
+	
+	for move in knight_moves:
+		var new_pos = Vector2i(position.x + move.x, position.y + move.y)
+		if new_pos.x >= 0 and new_pos.x < 8 and new_pos.y >= 0 and new_pos.y < 8:
+			valid_moves.append(new_pos)
+			
+	return valid_moves

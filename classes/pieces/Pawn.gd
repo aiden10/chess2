@@ -23,5 +23,19 @@ func primary_ability() -> void:
 func ultimate_ability() -> void:
 	pass
 
-func can_move_to(from_pos: Vector2i, to_pos: Vector2i, board: Array) -> bool:
-	return true
+func can_move_to() -> Array[Vector2i]:
+	var valid_moves: Array[Vector2i] = []
+	var direction = 1 if color == PieceColor.WHITE else -1
+
+	# Forward one space
+	var forward = Vector2i(position.x + direction, position.y)
+	if forward.x >= 0 and forward.x < 8:
+		valid_moves.append(forward)
+
+	# Initial two space move
+	if not has_moved:
+		var double_forward = Vector2i(position.x + (2 * direction), position.y)
+		if double_forward.x >= 0 and double_forward.x < 8:
+			valid_moves.append(double_forward)
+
+	return valid_moves

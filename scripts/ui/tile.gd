@@ -51,10 +51,21 @@ func _input_event(_viewport, event, _shape_idx):
 
 ## Updates selected piece and emits a signal to render the piece overlay
 func _on_tile_clicked() -> void:
-	var piece: Piece = BoardState.board[row][col]
-	if piece == GameState.selected_piece and piece != null:
+	var position: Piece = BoardState.board[row][col]
+	if position == GameState.selected_piece:
 		GameState.selected_piece = null
+	## Move
+	elif position == null and GameState.selected_piece != null and GameState.selected_piece.color == GameState.turn:
+		if Vector2i(row, col) in GameState.selected_piece.can_move_to():
+			## Update board to the new piece's position
+			BoardState.board[row][col] = GameState.selected_piece
+			BoardState.board[GameState.selected_piece.position.x][GameState.selected_piece.position.y] = null
+			GameState.selected_piece = null
+			
+			## TEMP
+			## Will be replaced when I figure out the exact turn logic
+			EventBus.turn_ended.emit() 
 	else:
-		GameState.selected_piece = piece
-		
+		GameState.selected_piece = position
+	
 	EventBus.piece_selected.emit()

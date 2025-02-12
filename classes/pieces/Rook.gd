@@ -23,5 +23,15 @@ func primary_ability() -> void:
 func ultimate_ability() -> void:
 	pass
 
-func can_move_to(from_pos: Vector2i, to_pos: Vector2i, board: Array) -> bool:
-	return true
+## Returns a list of positions that this piece can move to
+func can_move_to() -> Array[Vector2i]:
+	var valid_moves: Array[Vector2i] = []
+
+	# Horizontal and vertical moves
+	for i in range(8):
+		if i != position.x:
+			valid_moves.append(Vector2i(i, position.y))  # Horizontal
+		if i != position.y:
+			valid_moves.append(Vector2i(position.x, i))  # Vertical
+			
+	return valid_moves

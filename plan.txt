@@ -28,5 +28,46 @@ Ability usage:
 
     Abilities will also have cooldowns, which reset after a certain number of turns. 
 
+Abilities:
+    Passives:
+        Pawn:
+            - 
+        Knight:
+            - 
+        Bishop:
+            -
+        Rook:
+            -
+        Queen:
+            -
+        King:
+            - Madness/Bloodlust/Frenzied: Killing ANY unit grants +1 HP and +1 ATK 
+    Primaries:
+        Pawn:
+            - 
+        Knight:
+            - 
+        Bishop:
+            -
+        Rook:
+            -
+        Queen:
+            -
+        King:
+            - 
+    Ultimates:
+        Pawn:
+            - 
+        Knight:
+            - 
+        Bishop:
+            -
+        Rook:
+            -
+        Queen:
+            - Birth: Spawn a pawn in an adjacent position (Only usable while adjacent to a friendly king)
+        King:
+            - 
+
 Win condition:
     Kill the opponent's king
