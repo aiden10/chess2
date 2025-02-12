@@ -55,16 +55,12 @@ func _on_tile_clicked() -> void:
 	if position == GameState.selected_piece:
 		GameState.selected_piece = null
 	## Move
-	elif position == null and GameState.selected_piece != null and GameState.selected_piece.color == GameState.turn:
-		if Vector2i(row, col) in GameState.selected_piece.can_move_to():
-			## Update board to the new piece's position
-			BoardState.board[row][col] = GameState.selected_piece
-			BoardState.board[GameState.selected_piece.position.x][GameState.selected_piece.position.y] = null
+	elif not position and GameState.selected_piece and GameState.selected_piece.color == GameState.turn:
+		## Deselect piece if they select an empty tile that cannot be moved to 
+		if Vector2i(row, col) not in GameState.selected_piece.can_move_to():
 			GameState.selected_piece = null
-			
-			## TEMP
-			## Will be replaced when I figure out the exact turn logic
-			EventBus.turn_ended.emit() 
+		else:
+			EventBus.move.emit(position, row, col)
 	else:
 		GameState.selected_piece = position
 	

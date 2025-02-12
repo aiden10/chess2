@@ -11,6 +11,4 @@ Make pieces movable
                 ## Update board to the new piece's position
                 BoardState.board[row][col] = GameState.selected_piece
 
-Make actions less attached to the tile script
-
 Attack logic
