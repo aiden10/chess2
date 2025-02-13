@@ -5,18 +5,13 @@ Attack logic
     to attack the enemy hovered piece. 
     If the attacker is also in the attacked piece's attack_targets, then the attacker will pulse reddish and transparent to opaque.
 
-Ability cooldowns
-
-"main" should be one that just initializes various things, what I currently have in main should be attached to an ActionHandler node and 
-a TurnHandler node.
 
 Checkmate
 Win screen
+Ability cooldowns?
 Passives
+Castling, en passant
+"main" should be one that just initializes various things, what I currently have in main should be attached to an ActionHandler node and 
+a TurnHandler node.
 
-Adding abilities:
-    Add its name, description, and texture path to ability_info.gd
-    Define the ability class in classes/abilities
-    Create the ability in globals/abilities.gd
-    Assign it to pieces in board_functions.populate_board 
 

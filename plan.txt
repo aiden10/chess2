@@ -29,6 +29,12 @@ Ability usage:
         If the ability is something automatically used then the user just needs to click on the ability
 
     Abilities will also have cooldowns, which reset after a certain number of turns. 
+    
+Adding abilities:
+    Add its name, description, and texture path to ability_info.gd
+    Define the ability class in classes/abilities
+    Create the ability in globals/abilities.gd
+    Assign it to pieces in board_functions.populate_board 
 
 Abilities:
     Passives:

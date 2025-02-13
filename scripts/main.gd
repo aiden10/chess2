@@ -15,13 +15,7 @@ func game_won(winner: Piece.PieceColor) -> void:
 	else:
 		GameState.winner = "Black"
 	win_screen_scene.instantiate()
-	
-## TODO
-func is_checkmate() -> void:
-	var checkmate = false
-	if checkmate:
-		game_won(Piece.PieceColor.WHITE)
-	
+		
 func end_turn() -> void:
 	## Alternate between 0 and 1
 	GameState.turn = int(!bool(GameState.turn))
@@ -30,7 +24,7 @@ func end_turn() -> void:
 	print("Turn: " + Piece.PieceColor.keys()[GameState.turn])
 	
 	## Check for checkmate after each turn (i.e. after a piece has moved)
-	is_checkmate()
+	BoardFunctions.is_checkmate()
 
 ## [other_piece]: the board value at the position that was clicked
 ## [row], [col]: the x and y position of the clicked tile

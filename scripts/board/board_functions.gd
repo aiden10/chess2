@@ -2,6 +2,49 @@ extends Node
 
 class_name BoardFunctions
 
+## TODO 
+## Check if any friendly pieces can block the check
+## Check if any piece can be killed to stop the check 
+
+static func is_checkmate() -> void:
+	for color in Piece.PieceColor:
+		var king: Piece = _find_king(color)
+		var enemy_valid_moves = _enemy_valid_moves(color)
+
+		# Only check for checkmate if king is in check
+		if king.position in enemy_valid_moves:
+			# Check if king can escape
+			var can_escape = false
+			for king_move in king.can_move_to():
+				if king_move not in enemy_valid_moves:
+					can_escape = true
+					break
+
+			# If king can't escape, it's checkmate
+			if not can_escape:
+				var winner = Piece.PieceColor.WHITE if color == Piece.PieceColor.BLACK else Piece.PieceColor.BLACK
+				EventBus.game_won.emit(winner)
+				
+static func _find_king(side: Piece.PieceColor) -> Piece:
+	for row in BoardState.board.size():
+		for col in BoardState.board[row].size():
+			if BoardState.board[row][col] != null:
+				var piece: Piece = BoardState.board[row][col]
+				if piece.color == side and piece.type == Piece.PieceType.KING:
+					return piece
+	return
+	
+static func _enemy_valid_moves(side: Piece.PieceColor) -> Array[Vector2i]:
+	var moves: Array[Vector2i] = []
+	for row in BoardState.board.size():
+		for col in BoardState.board[row].size():
+			if BoardState.board[row][col] != null:
+				var piece: Piece = BoardState.board[row][col]
+				if piece.color != side:
+					for move in piece.can_move_to():
+						moves.append(move)		
+	return moves
+	
 static func populate_board():
 	## White pieces back row (from left to right: 0,0 to 7,0)
 	var white_rook1 = Rook.new(Piece.PieceColor.WHITE)
