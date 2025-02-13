@@ -46,7 +46,7 @@ func attack_targets() -> Array[Vector2i]:
 		
 		## Ignore out of bounds
 		if new_pos.x < 0 or new_pos.x >= BoardState.COLS or new_pos.y < 0 or new_pos.y >= BoardState.COLS:
-			break
+			continue
 			
 		var other_piece: Piece = BoardState.board[new_pos.x][new_pos.y]
 		if other_piece:

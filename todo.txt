@@ -10,8 +10,9 @@ Ability cooldowns
 "main" should be one that just initializes various things, what I currently have in main should be attached to an ActionHandler node and 
 a TurnHandler node.
 
-Win conditions: Checkmate or kill enemy king
+Checkmate
 Win screen
+Passives
 
 Adding abilities:
     Add its name, description, and texture path to ability_info.gd

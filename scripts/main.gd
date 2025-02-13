@@ -14,7 +14,7 @@ func game_won(winner: Piece.PieceColor) -> void:
 		GameState.winner = "White"
 	else:
 		GameState.winner = "Black"
-	get_tree().change_scene_to(win_screen_scene)
+	win_screen_scene.instantiate()
 	
 ## TODO
 func is_checkmate() -> void:

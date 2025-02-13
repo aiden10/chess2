@@ -34,7 +34,7 @@ func can_move_to() -> Array[Vector2i]:
 			
 			# Check if position is out of bounds
 			if pos.x < 0 or pos.x >= BoardState.COLS or pos.y < 0 or pos.y >= BoardState.COLS:
-				break  # Stop checking this direction if we're out of bounds
+				continue  # Stop checking this direction if we're out of bounds
 				
 			# Check if there's a piece at this position
 			if BoardState.board[pos.x][pos.y] != null:
@@ -65,12 +65,10 @@ func attack_targets() -> Array[Vector2i]:
 			
 			# Check if position is out of bounds
 			if pos.x < 0 or pos.x >= BoardState.COLS or pos.y < 0 or pos.y >= BoardState.COLS:
-				break  # Stop checking this direction if we're out of bounds
+				continue  # Stop checking this direction if we're out of bounds
 				
 			var other_piece: Piece = BoardState.board[pos.x][pos.y]
 			if other_piece != null:
-				if other_piece.color == color:
-					break
 				var x_diff: int = abs(position.x - pos.x) 
 				var y_diff: int = abs(position.y - pos.y) 
 				if other_piece.color != color and x_diff <= attack_range and y_diff <= attack_range:
