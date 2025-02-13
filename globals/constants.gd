@@ -6,6 +6,9 @@ const SPRITE_SIZE: float = 1.25
 const VALID_MOVE_TILE_COLOR = Color.AQUAMARINE
 const VALID_ATTACK_TILE_COLOR = Color.CRIMSON
 
+## Could make it so that healing/damage abilities have different colors
+const VALID_ABILITY_TILE_COLOR = Color.DARK_VIOLET
+
 const PAWN_HP = 2
 const PAWN_STRENGTH = 1
 const PAWN_RANGE = 1

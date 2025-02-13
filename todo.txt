@@ -1,19 +1,3 @@
-Make pieces movable
-    In draw_board:
-        if GameState.selected_piece:
-            var movable_tiles: Array[Vector2i] = GameState.selected_piece.can_move_to()
-            if Vector2i(row, col) in movable_tiles:
-                tile.color = Constants.VALID_TILE_COLOR    
-    
-    In on_tile_clicked:
-        if GameState.selected_piece:
-            if Vector2i(row, col) in GameState.selected_piece.can_move_to():
-                ## Update board to the new piece's position
-                BoardState.board[row][col] = GameState.selected_piece
-
-Add attack ranges for all pieces
-Figure out how to incorporate that into the attack logic
-
 Attack logic
     While a piece is selected, its attackable tiles are shown colored red. If a piece is in one of the attackable tiles, it should pulse reddish, going from
     transparent and opaque.
@@ -21,21 +5,9 @@ Attack logic
     to attack the enemy hovered piece. 
     If the attacker is also in the attacked piece's attack_targets, then the attacker will pulse reddish and transparent to opaque.
 
-Abilities
-    Store abilities in different JSON files which get loaded in a global script.
-    Format:
-        {
-            0 : {
-                    "passives": ["name": "name here", "description": "description here", "image": "image_path", "function_name": "function name"],
-                    },
-            "Rook": {"passives": []},
-            ...
-        }
-
-    The values will be iterated over and Ability objects will be created:
-        passive_ability_dict = {}
-        for piece_type, value in passives_json:
-            for passive_dict in value:
-                var passive = PassiveAbility(value["name"], value["description"], value["image"], value["function_name"])
-                passive_ability_dict.update({piece_type: passive})
+Adding abilities:
+    Add its name, description, and texture path to ability_info.gd
+    Define the ability class in classes/abilities
+    Create the ability in globals/abilities.gd
+    Assign it to pieces in board_functions.populate_board 
 

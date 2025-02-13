@@ -12,7 +12,7 @@ func _ready() -> void:
 	## Make overlay hidden by default
 	visible = false
 	EventBus.piece_selected.connect(draw_overlay)
-
+	
 func draw_overlay():
 	if GameState.selected_piece != null:
 		visible = true
@@ -20,6 +20,7 @@ func draw_overlay():
 		health_label.text = "HP: " + str(GameState.selected_piece.health)
 		strength_label.text = "ATK: " + str(GameState.selected_piece.strength)
 		portrait.texture = GameState.selected_piece.texture
+		EventBus.overlay_drawn.emit()
 		
 	else:
 		## Hide overlay

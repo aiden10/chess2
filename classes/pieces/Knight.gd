@@ -6,10 +6,7 @@ func _init(piece_color: PieceColor) -> void:
 	super._init(PieceType.KNIGHT, piece_color)
 	self.strength = Constants.KNIGHT_STRENGTH
 	self.health = Constants.KNIGHT_HP
-	self.max_hp = Constants.KNIGHT_HP
-	self.passive = passive_ability
-	self.primary = primary_ability
-	self.ultimate = ultimate_ability
+	self.max_health = Constants.KNIGHT_HP
 	if piece_color == PieceColor.WHITE:
 		self.texture = load("res://resources/sprites/white/knight.png")
 	else:

@@ -21,6 +21,7 @@ BoardState="*res://states/board_state.gd"
 Constants="*res://globals/constants.gd"
 GameState="*res://states/game_state.gd"
 EventBus="*res://globals/event_bus.gd"
+AbilityInfo="*res://globals/ability_info.gd"
 
 [dotnet]
 

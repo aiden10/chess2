@@ -12,8 +12,18 @@ var sprite: Texture2D
 
 @onready var health_label: Label = $Panel/PieceHealth
 @onready var panel: Panel = $Panel
+@onready var area: Area2D = $Area
+@onready var collision: CollisionShape2D = $Area/Collision
 
 func _ready() -> void:
+	var rectangle_shape = RectangleShape2D.new()
+	rectangle_shape.size = size
+	collision.shape = rectangle_shape
+	collision.position = size / 2
+	area.mouse_entered.connect(_on_mouse_entered)
+	area.mouse_exited.connect(_on_mouse_exited)
+	area.input_event.connect(_input_event)
+
 	last_color = color
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	set_process_input(true)
@@ -42,7 +52,7 @@ func _draw() -> void:
 	if piece:
 		health_label.visible = true
 		panel.visible = true
-		health_label.text = str(piece.health) + "/" + str(piece.max_hp)
+		health_label.text = str(piece.health) + "/" + str(piece.max_health)
 	else:
 		health_label.text = ""
 		health_label.visible = false

@@ -13,8 +13,10 @@ func initialize() -> void:
 	# Connect to window resize signal
 	get_tree().root.size_changed.connect(_on_window_resize)
 	
-	# Also redraw the board to show valid tiles
+	## Redraw board when a piece is selected or ability is selcted
+	## to show the valid move, attack, or ability tiles
 	EventBus.piece_selected.connect(draw_board)
+	EventBus.ability_selected.connect(draw_board)
 	
 	_calculate_tile_size()
 	draw_board()
@@ -44,22 +46,26 @@ func draw_board() -> void:
 	# Clear existing tiles
 	for child in get_children():
 		child.queue_free()
-	var valid_movement_tiles: Array[Vector2i] 
-	var valid_attack_tiles: Array[Vector2i]
+	var valid_movement_tiles: Array[Vector2i] = []
+	var valid_attack_tiles: Array[Vector2i] = []
+	var valid_ability_tiles: Array[Vector2i] = []
 	if GameState.selected_piece:
 		valid_movement_tiles = GameState.selected_piece.can_move_to()
 		valid_attack_tiles = GameState.selected_piece.attack_targets()
+		if GameState.selected_ability:
+			valid_ability_tiles = GameState.selected_ability.valid_tiles()
 		
 	for row in BoardState.board.size():
 		for col in BoardState.board[row].size():
 			var tile = tile_scene.instantiate()
 			var color = Color.WHITE if (row + col) % 2 == 0 else Color.BLACK
 			
-			if GameState.selected_piece != null:
-				if Vector2i(row, col) in valid_movement_tiles:
-					color = Constants.VALID_MOVE_TILE_COLOR
-				if Vector2i(row, col) in valid_attack_tiles:
-					color = Constants.VALID_ATTACK_TILE_COLOR
+			if Vector2i(row, col) in valid_movement_tiles:
+				color = Constants.VALID_MOVE_TILE_COLOR
+			if Vector2i(row, col) in valid_attack_tiles:
+				color = Constants.VALID_ATTACK_TILE_COLOR
+			if Vector2i(row, col) in valid_ability_tiles:
+				color = Constants.VALID_ABILITY_TILE_COLOR
 			
 			var piece: Piece = BoardState.board[row][col]
 			var sprite = null
@@ -73,24 +79,6 @@ func draw_board() -> void:
 			tile.row = row
 			tile.col = col
 			tile.sprite = sprite
-			
-			# Set up mouse detection
-			var collision_shape = CollisionShape2D.new()
-			var rectangle_shape = RectangleShape2D.new()
-			rectangle_shape.size = tile_size
-			collision_shape.shape = rectangle_shape
-			collision_shape.position = tile_size / 2
-
-			# Add Area2D for mouse detection
-			var area = Area2D.new()
-			area.position = Vector2.ZERO
-			area.add_child(collision_shape)
-			tile.add_child(area)
-			
-			# Connect mouse signals
-			area.mouse_entered.connect(tile._on_mouse_entered)
-			area.mouse_exited.connect(tile._on_mouse_exited)
-			area.input_event.connect(tile._input_event)
 			
 			add_child(tile)
 

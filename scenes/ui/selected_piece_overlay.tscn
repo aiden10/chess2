@@ -32,9 +32,12 @@ layout_mode = 2
 
 [node name="PassiveCard" parent="VBoxContainer" instance=ExtResource("1_r2sha")]
 layout_mode = 2
+is_passive = true
 
 [node name="PrimaryCard" parent="VBoxContainer" instance=ExtResource("1_r2sha")]
 layout_mode = 2
+is_primary = true
 
 [node name="UltimateCard" parent="VBoxContainer" instance=ExtResource("1_r2sha")]
 layout_mode = 2
+is_ultimate = true

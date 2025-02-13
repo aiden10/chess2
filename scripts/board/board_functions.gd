@@ -3,7 +3,7 @@ extends Node
 class_name BoardFunctions
 
 static func populate_board():
-	# White pieces back row (from left to right: 0,0 to 7,0)
+	## White pieces back row (from left to right: 0,0 to 7,0)
 	var white_rook1 = Rook.new(Piece.PieceColor.WHITE)
 	white_rook1.position = Vector2i(0, 0)
 	var white_knight1 = Knight.new(Piece.PieceColor.WHITE)
@@ -30,13 +30,14 @@ static func populate_board():
 	BoardState.board[0][6] = white_knight2
 	BoardState.board[0][7] = white_rook2
 
-	# White pawns (row 1)
+	## White pawns (row 1)
 	for col in range(BoardState.COLS):
 		var white_pawn = Pawn.new(Piece.PieceColor.WHITE)
 		white_pawn.position = Vector2i(1, col)
+		white_pawn.primary = Abilities.heal_ability
 		BoardState.board[1][col] = white_pawn
 
-	# Black pieces back row (from left to right: 0,7 to 7,7)
+	## Black pieces back row (from left to right: 0,7 to 7,7)
 	var black_rook1 = Rook.new(Piece.PieceColor.BLACK)
 	black_rook1.position = Vector2i(7, 0)
 	var black_knight1 = Knight.new(Piece.PieceColor.BLACK)
@@ -63,8 +64,32 @@ static func populate_board():
 	BoardState.board[7][6] = black_knight2
 	BoardState.board[7][7] = black_rook2
 
-	# Black pawns (row 6)
+	## Black pawns (row 6)
 	for col in range(BoardState.COLS):
 		var black_pawn = Pawn.new(Piece.PieceColor.BLACK)
 		black_pawn.position = Vector2i(6, col)
+		black_pawn.primary = Abilities.heal_ability
 		BoardState.board[6][col] = black_pawn
+
+	## Assign abilty objects
+	white_bishop1.primary = Abilities.heal_ability
+	white_bishop2.primary = Abilities.heal_ability
+	black_bishop1.primary = Abilities.heal_ability
+	black_bishop2.primary = Abilities.heal_ability
+
+	white_rook1.primary = Abilities.heal_ability
+	white_rook2.primary = Abilities.heal_ability
+	black_rook1.primary = Abilities.heal_ability
+	black_rook2.primary = Abilities.heal_ability
+	
+	white_knight1.primary = Abilities.heal_ability
+	white_knight2.primary = Abilities.heal_ability
+	black_knight1.primary = Abilities.heal_ability
+	black_knight2.primary = Abilities.heal_ability
+	
+	white_queen.primary = Abilities.heal_ability
+	black_queen.primary = Abilities.heal_ability
+	
+	white_king.primary = Abilities.heal_ability
+	black_king.primary = Abilities.heal_ability
+	

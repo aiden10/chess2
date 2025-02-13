@@ -6,11 +6,8 @@ func _init(piece_color: PieceColor) -> void:
 	super._init(PieceType.QUEEN, piece_color)
 	self.strength = Constants.QUEEN_STRENGTH
 	self.health = Constants.QUEEN_HP
-	self.max_hp = Constants.QUEEN_HP
+	self.max_health = Constants.QUEEN_HP
 	self.attack_range = Constants.QUEEN_RANGE
-	self.passive = passive_ability
-	self.primary = primary_ability
-	self.ultimate = ultimate_ability
 	if piece_color == PieceColor.WHITE:
 		self.texture = load("res://resources/sprites/white/queen.png")
 	else:

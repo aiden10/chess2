@@ -6,11 +6,8 @@ func _init(piece_color: PieceColor) -> void:
 	super._init(PieceType.PAWN, piece_color)
 	self.strength = Constants.PAWN_STRENGTH
 	self.health = Constants.PAWN_HP
-	self.max_hp = Constants.PAWN_HP
+	self.max_health = Constants.PAWN_HP
 	self.attack_range = Constants.PAWN_RANGE
-	self.passive = passive_ability
-	self.primary = primary_ability
-	self.ultimate = ultimate_ability
 	if piece_color == PieceColor.WHITE:
 		self.texture = load("res://resources/sprites/white/pawn.png")
 	else:

@@ -50,7 +50,7 @@ Abilities:
         Knight:
             - 
         Bishop:
-            - Heal: Heal friendly pieces adjacent pieces
+            - Heal: Heal a friendly adjacent piece
         Rook:
             - Snipe/Blast: Shoot a projectile
             - Barricade: Place a Wall within attack range
