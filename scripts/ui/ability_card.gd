@@ -15,10 +15,16 @@ func _on_button_clicked() -> void:
 	if is_passive:
 		return
 	elif is_primary:
-		GameState.selected_ability = GameState.selected_piece.primary
+		if GameState.selected_ability == GameState.selected_piece.primary:
+			GameState.selected_ability = null
+		else:
+			GameState.selected_ability = GameState.selected_piece.primary
 		EventBus.ability_selected.emit()
 	elif is_ultimate:
-		GameState.selected_ability = GameState.selected_piece.ultimate
+		if GameState.selected_ability == GameState.selected_piece.ultimate:
+			GameState.selected_ability = null
+		else:
+			GameState.selected_ability = GameState.selected_piece.ultimate
 		EventBus.ability_selected.emit()
 
 func _draw() -> void:

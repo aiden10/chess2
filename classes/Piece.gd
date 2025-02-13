@@ -33,6 +33,9 @@ func _init(piece_type: PieceType, piece_color: PieceColor) -> void:
 
 func take_damage(amount: int) -> bool:
 	health -= amount
+	if type == PieceType.KING and health <= 0:
+		var winner = PieceColor.WHITE if color == PieceColor.BLACK else PieceColor.BLACK
+		EventBus.game_won.emit(winner)
 	return health <= 0  # Return true if piece is defeated
 
 # Child classes will override this with specific movement patterns

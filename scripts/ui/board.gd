@@ -49,10 +49,10 @@ func draw_board() -> void:
 	var valid_movement_tiles: Array[Vector2i] = []
 	var valid_attack_tiles: Array[Vector2i] = []
 	var valid_ability_tiles: Array[Vector2i] = []
-	if GameState.selected_piece:
+	if GameState.selected_piece and not GameState.selected_ability:
 		valid_movement_tiles = GameState.selected_piece.can_move_to()
 		valid_attack_tiles = GameState.selected_piece.attack_targets()
-		if GameState.selected_ability:
+	if GameState.selected_ability and GameState.selected_piece:
 			valid_ability_tiles = GameState.selected_ability.valid_tiles()
 		
 	for row in BoardState.board.size():

@@ -1,25 +1,43 @@
 extends Node
 
 @onready var boardNode = $Board
+var win_screen_scene = preload("res://scenes/win_screen.tscn")
 
 func _ready() -> void:
 	BoardFunctions.populate_board()
 	boardNode.initialize()
 	EventBus.tile_clicked.connect(selection_handler)
+	EventBus.game_won.connect(game_won)
 
+func game_won(winner: Piece.PieceColor) -> void:
+	if winner == Piece.PieceColor.WHITE:
+		GameState.winner = "White"
+	else:
+		GameState.winner = "Black"
+	get_tree().change_scene_to(win_screen_scene)
+	
+## TODO
+func is_checkmate() -> void:
+	var checkmate = false
+	if checkmate:
+		game_won(Piece.PieceColor.WHITE)
+	
 func end_turn() -> void:
 	## Alternate between 0 and 1
 	GameState.turn = int(!bool(GameState.turn))
 	GameState.selected_piece = null
 	GameState.selected_ability = null
 	print("Turn: " + Piece.PieceColor.keys()[GameState.turn])
+	
+	## Check for checkmate after each turn (i.e. after a piece has moved)
+	is_checkmate()
 
 ## [other_piece]: the board value at the position that was clicked
 ## [row], [col]: the x and y position of the clicked tile
 func selection_handler(other_piece: Piece, row: int, col: int) -> void:
 	
 	## Check if ability used
-	if GameState.selected_ability:
+	if GameState.selected_ability and GameState.selected_piece and GameState.selected_piece.color == GameState.turn:
 		if Vector2i(row, col) in GameState.selected_ability.valid_tiles():
 			GameState.selected_ability.activate(row, col)
 			end_turn()
@@ -30,8 +48,8 @@ func selection_handler(other_piece: Piece, row: int, col: int) -> void:
 		GameState.selected_piece = null
 
 	## Move conditions
-	elif not other_piece and GameState.selected_piece and GameState.selected_piece.color == GameState.turn:
-		
+	elif not other_piece and GameState.selected_piece and GameState.selected_piece.color == GameState.turn and not GameState.selected_ability:
+
 		## Deselect piece if they select an empty tile that cannot be moved to 
 		if Vector2i(row, col) not in GameState.selected_piece.can_move_to():
 			GameState.selected_piece = null
@@ -40,7 +58,7 @@ func selection_handler(other_piece: Piece, row: int, col: int) -> void:
 			move(other_piece, row, col)
 	
 	## Attack conditions
-	elif other_piece and GameState.selected_piece and other_piece.color != GameState.turn:
+	elif other_piece and GameState.selected_piece and other_piece.color != GameState.turn and not GameState.selected_ability:
 		attack(other_piece, row, col)
 
 	## Not moving and not toggling selection, so just update the selected piece
