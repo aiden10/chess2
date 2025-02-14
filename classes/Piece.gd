@@ -6,7 +6,8 @@ enum PieceType {
 	KNIGHT,
 	BISHOP,
 	QUEEN,
-	KING
+	KING,
+	WALL
 }
 
 enum PieceColor {

@@ -7,7 +7,7 @@ func _init(piece_color: PieceColor) -> void:
 	self.strength = Constants.ROOK_STRENGTH
 	self.health = Constants.ROOK_HP
 	self.max_health = Constants.ROOK_HP
-	self.attack_range = Constants.BISHOP_RANGE
+	self.attack_range = Constants.ROOK_RANGE
 	if piece_color == PieceColor.WHITE:
 		self.texture = load("res://resources/sprites/white/rook.png")
 	else:

@@ -8,8 +8,8 @@ class_name BoardFunctions
 
 static func is_checkmate() -> void:
 	for color in Piece.PieceColor:
-		var king: Piece = _find_king(color)
-		var enemy_valid_moves = _enemy_valid_moves(color)
+		var king: Piece = _find_king(Piece.PieceColor[color])
+		var enemy_valid_moves = _enemy_valid_moves(Piece.PieceColor[color])
 
 		# Only check for checkmate if king is in check
 		if king.position in enemy_valid_moves:
@@ -120,10 +120,10 @@ static func populate_board():
 	black_bishop1.primary = Abilities.heal_ability
 	black_bishop2.primary = Abilities.heal_ability
 
-	white_rook1.primary = Abilities.heal_ability
-	white_rook2.primary = Abilities.heal_ability
-	black_rook1.primary = Abilities.heal_ability
-	black_rook2.primary = Abilities.heal_ability
+	white_rook1.primary = Abilities.barricade_ability
+	white_rook2.primary = Abilities.barricade_ability
+	black_rook1.primary = Abilities.barricade_ability
+	black_rook2.primary = Abilities.barricade_ability
 	
 	white_knight1.primary = Abilities.heal_ability
 	white_knight2.primary = Abilities.heal_ability

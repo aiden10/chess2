@@ -9,7 +9,8 @@ func _init() -> void:
 ## Basing the position off of the selected piece because in order to use an ability
 ## you need to have that piece selected
 func valid_tiles() -> Array[Vector2i]:
-	var tiles: Array[Vector2i] = [] ## Can self-heal
+	var tiles: Array[Vector2i] = []
+	 ## Can self-heal
 	if GameState.selected_piece.health < GameState.selected_piece.max_health:
 		tiles.append(GameState.selected_piece.position)
 	# Get adjacent friendly pieces

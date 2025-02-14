@@ -14,7 +14,8 @@ func _ready() -> void:
 	EventBus.overlay_drawn.connect(_draw)
 	
 func _on_button_clicked() -> void:
-	if is_passive:
+	## I either handle the pieces without abilities like this or I give the wall "dummy" abilities
+	if is_passive or GameState.selected_piece.type == Piece.PieceType.WALL:
 		return
 	
 	elif is_primary:

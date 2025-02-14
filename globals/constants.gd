@@ -31,3 +31,7 @@ const QUEEN_RANGE = 2
 const KING_HP = 12
 const KING_STRENGTH = 5
 const KING_RANGE = 1
+
+const WALL_HP = 3
+const WALL_STRENGTH = 0
+const WALL_RANGE = 0

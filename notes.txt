@@ -76,7 +76,7 @@ Abilities:
         Queen:
             - Birth: Spawn a pawn in an adjacent position (Only usable while adjacent to a friendly king)
         King:
-            - Enknighten: Turns an adjacent pawn into a knight
+            - Enknightenment: Turns an adjacent pawn into a knight
 
 Win condition:
     Kill the opponent's king or checkmate
