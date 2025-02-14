@@ -36,7 +36,7 @@ func selection_handler(other_piece: Piece, row: int, col: int) -> void:
 			GameState.selected_ability.activate(row, col)
 			end_turn()
 			return
-
+	GameState.selected_ability = null
 	## Basically just toggling the selection
 	if other_piece == GameState.selected_piece:
 		GameState.selected_piece = null
