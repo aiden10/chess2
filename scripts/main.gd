@@ -43,7 +43,6 @@ func selection_handler(other_piece: Piece, row: int, col: int) -> void:
 
 	## Move conditions
 	elif not other_piece and GameState.selected_piece and GameState.selected_piece.color == GameState.turn and not GameState.selected_ability:
-
 		## Deselect piece if they select an empty tile that cannot be moved to 
 		if Vector2i(row, col) not in GameState.selected_piece.can_move_to():
 			GameState.selected_piece = null
@@ -53,8 +52,11 @@ func selection_handler(other_piece: Piece, row: int, col: int) -> void:
 	
 	## Attack conditions
 	elif other_piece and GameState.selected_piece and other_piece.color != GameState.turn and not GameState.selected_ability:
-		attack(other_piece, row, col)
-
+		if Vector2i(row, col) not in GameState.selected_piece.attack_targets():
+			GameState.selected_piece = other_piece
+		else:
+			attack(other_piece, row, col)
+		
 	## Not moving and not toggling selection, so just update the selected piece
 	else:
 		GameState.selected_piece = other_piece

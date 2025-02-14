@@ -5,13 +5,13 @@ Attack logic
     to attack the enemy hovered piece. 
     If the attacker is also in the attacked piece's attack_targets, then the attacker will pulse reddish and transparent to opaque.
 
-
 Checkmate
 Win screen
 Ability cooldowns?
-Passives
+How to handle passives
+More abilities
 Castling, en passant
-"main" should be one that just initializes various things, what I currently have in main should be attached to an ActionHandler node and 
+"main" should be one script that just initializes various things, what I currently have in main should be attached to an ActionHandler node and 
 a TurnHandler node.
 
 

@@ -15,7 +15,7 @@ func _ready() -> void:
 	
 func _on_button_clicked() -> void:
 	## I either handle the pieces without abilities like this or I give the wall "dummy" abilities
-	if is_passive or GameState.selected_piece.type == Piece.PieceType.WALL:
+	if is_passive:
 		return
 	
 	elif is_primary:
