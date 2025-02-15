@@ -6,12 +6,18 @@ Attack logic
     If the attacker is also in the attacked piece's attack_targets, then the attacker will pulse reddish and transparent to opaque.
 
 Checkmate
-Win screen
 Ability cooldowns?
-How to handle passives
 More abilities
 Castling, en passant
-"main" should be one script that just initializes various things, what I currently have in main should be attached to an ActionHandler node and 
-a TurnHandler node.
+Multiplayer
 
-
+Roguelike mode:
+    Battles take place in what I currently have.
+    "Outer world" is grid based and there will be various rooms with items, shops, npcs, bosses, and enemies.
+    Navigation in the outer world will be "turn based" like traditional roguelikes.
+    When you interact with an enemy it takes you into the battle scene.
+    Enemies will have different piece configurations and different abilities/relics on their pieces.
+    Players can obtain passive items, or "relics" from item rooms, enemies, bosses, shops, or npcs.
+    Players can also obtain abilities from the same places they would obtain relics.
+    Before a battle, players can assign abilities that they obtain to their pieces.
+    A players pieces all start with no abilities.

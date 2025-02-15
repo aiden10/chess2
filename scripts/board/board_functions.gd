@@ -5,10 +5,13 @@ class_name BoardFunctions
 ## TODO 
 ## Check if any friendly pieces can block the check
 ## Check if any piece can be killed to stop the check 
-
 static func is_checkmate() -> void:
 	for color in Piece.PieceColor:
 		var king: Piece = _find_king(Piece.PieceColor[color])
+		
+		## King was killed
+		if not king:
+			return 
 		var enemy_valid_moves = _enemy_valid_moves(Piece.PieceColor[color])
 
 		# Only check for checkmate if king is in check
@@ -44,8 +47,13 @@ static func _enemy_valid_moves(side: Piece.PieceColor) -> Array[Vector2i]:
 					for move in piece.can_move_to():
 						moves.append(move)		
 	return moves
-	
-static func populate_board():
+
+static func reset_board() -> void:
+	for row in BoardState.board.size():
+		for col in BoardState.board[row].size():
+			BoardState.board[row][col] = null
+
+static func populate_board() -> void:
 	## White pieces back row (from left to right: 0,0 to 7,0)
 	var white_rook1 = Rook.new(Piece.PieceColor.WHITE)
 	white_rook1.position = Vector2i(0, 0)

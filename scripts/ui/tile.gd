@@ -39,12 +39,10 @@ func _draw() -> void:
 	draw_rect(rect, color)
 	draw_rect(rect, Color.BLACK, false) # false means no fill, only outline
 	if sprite:
-		# Calculate position to center the sprite in the tile
-		var sprite_rect = Rect2(Vector2.ZERO, sprite.get_size())
 		# Scale sprite to fit within the tile while maintaining aspect ratio
-		var scale = min(size.x / sprite.get_size().x, size.y / sprite.get_size().y)
-		scale /= Constants.SPRITE_SIZE
-		var scaled_size = sprite.get_size() * scale
+		var scale_size = min(size.x / sprite.get_size().x, size.y / sprite.get_size().y)
+		scale_size /= Constants.SPRITE_SIZE
+		var scaled_size = sprite.get_size() * scale_size
 		var pos = (size - scaled_size) / 2  # Center the sprite
 		draw_texture_rect(sprite, Rect2(pos, scaled_size), false)
 	

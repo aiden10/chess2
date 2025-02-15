@@ -3,6 +3,7 @@ extends Node
 signal piece_selected
 signal ability_selected
 signal game_won(winner_color)
+signal turn_ended()
 signal tile_clicked(other_piece, row, col)
 signal tile_entered(other_piece, row, col)
 signal tile_exited()
