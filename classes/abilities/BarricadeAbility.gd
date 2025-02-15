@@ -5,7 +5,8 @@ func _init() -> void:
 	sprite = AbilityInfo.barricade_sprite
 	name = AbilityInfo.barricade_name
 	description = AbilityInfo.barricade_description
-
+	cooldown = 0
+	
 ## Basing the position off of the selected piece because in order to use an ability
 ## you need to have that piece selected
 func valid_tiles() -> Array[Vector2i]:
@@ -39,4 +40,4 @@ func activate(row: int, col: int) -> void:
 	var wall = Wall.new(GameState.selected_piece.color) ## Make the wall the same color as its creator
 	wall.position = Vector2i(row, col)
 	BoardState.board[row][col] = wall
-	
+	cooldown = AbilityInfo.barricade_cooldown

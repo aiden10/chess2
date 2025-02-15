@@ -7,7 +7,6 @@ Attack logic
 
 Move and attack option?
 How checkmate should work?
-How ability cooldowns should work?
 More abilities
 Castling, en passant, pawn promotions
 Multiplayer

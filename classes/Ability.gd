@@ -4,6 +4,8 @@ extends Resource
 var sprite: Texture2D
 var name: String
 var description: String
+var cooldown: int
+var used: bool
 
 # Abstract methods that child classes must implement
 func valid_tiles() -> Array[Vector2i]:

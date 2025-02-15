@@ -4,6 +4,7 @@ extends Control
 @onready var ability_button: TextureButton = $VBoxContainer/AbilityIcon
 @onready var ability_name: Label = $VBoxContainer/AbiltyName
 @onready var description: Label = $VBoxContainer/AbilityDescription
+@onready var status: Label = $VBoxContainer/AbilityStatus
 
 @export var is_passive: bool
 @export var is_primary: bool
@@ -19,16 +20,20 @@ func _on_button_clicked() -> void:
 		return
 	
 	elif is_primary:
+		## Toggle ability selection
 		if GameState.selected_ability == GameState.selected_piece.primary:
 			GameState.selected_ability = null
-		else:
+		elif GameState.selected_piece.primary.cooldown == 0: ## Select the ability if its cooldown is over
 			GameState.selected_ability = GameState.selected_piece.primary
+		else: ## Cooldown not over, deselect ability
+			GameState.selected_ability = null
 		EventBus.ability_selected.emit()
 		
 	elif is_ultimate:
+		## Toggle ability selection
 		if GameState.selected_ability == GameState.selected_piece.ultimate:
 			GameState.selected_ability = null
-		else:
+		else: ## Select the ability
 			GameState.selected_ability = GameState.selected_piece.ultimate
 		EventBus.ability_selected.emit()
 
@@ -48,10 +53,27 @@ func _draw() -> void:
 			ability_button.texture_normal = selected_piece.primary.sprite
 			ability_name.text = selected_piece.primary.name	
 			description.text = selected_piece.primary.description
-	
+			
+			if selected_piece.primary.cooldown == 0:
+				ability_button.disabled = false
+				ability_button.modulate = Color(1, 1, 1, 1.0)
+				status.text = "Ready"
+			## Ability on cooldown
+			else:
+				ability_button.disabled = true
+				ability_button.modulate = Color(0.3, 0.3, 0.3, 0.5)
+				var t = "turn" if selected_piece.primary.cooldown == 1 else "turns"
+				status.text = "On cool down (" + str(selected_piece.primary.cooldown) + " " + t + " left)"
+				
 	elif is_ultimate:
 		if selected_piece.ultimate:
 			ability_button.texture_normal = selected_piece.ultimate.sprite	
 			ability_name.text = selected_piece.ultimate.name	
 			description.text = selected_piece.ultimate.description	
+			if selected_piece.ultimate.used:
+				ability_button.disabled = true
+				ability_button.modulate = Color(0.3, 0.3, 0.3, 0.5)
+				status.text = "Depleted"
+			else:
+				status.text = "Ready"
 		

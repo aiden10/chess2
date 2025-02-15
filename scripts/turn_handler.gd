@@ -17,12 +17,18 @@ func game_won(winner: Piece.PieceColor) -> void:
 	win_screen.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
 
+func start_turn() -> void:
+	var abilities = Abilities.white_abilities + Abilities.black_abilities
+	for ability in abilities:
+		if ability.cooldown > 0:
+			ability.cooldown -= 1
+
 func end_turn() -> void:
 	## Alternate between 0 and 1
 	GameState.turn = int(!bool(GameState.turn))
 	GameState.selected_piece = null
 	GameState.selected_ability = null
 	print("Turn: " + Piece.PieceColor.keys()[GameState.turn])
-	
+	start_turn()
 	## Check for checkmate after each turn (i.e. after a piece has moved)
 	# BoardFunctions.is_checkmate()

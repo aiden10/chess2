@@ -24,3 +24,6 @@ layout_mode = 2
 
 [node name="AbilityDescription" type="Label" parent="VBoxContainer"]
 layout_mode = 2
+
+[node name="AbilityStatus" type="Label" parent="VBoxContainer"]
+layout_mode = 2
