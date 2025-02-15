@@ -1,6 +1,7 @@
 extends Piece
 
 class_name Pawn
+var reversed: bool = false
 
 func _init(piece_color: PieceColor) -> void:
 	super._init(PieceType.PAWN, piece_color)
@@ -16,7 +17,9 @@ func _init(piece_color: PieceColor) -> void:
 func can_move_to() -> Array[Vector2i]:
 	var valid_moves: Array[Vector2i] = []
 	var direction = 1 if color == PieceColor.WHITE else -1
-
+	if self.reversed:
+		direction *= -1
+		
 	# Forward one space
 	var forward = Vector2i(position.x + direction, position.y)
 	if forward.x >= 0 and forward.x < 8 and BoardState.board[forward.x][forward.y] == null:
@@ -33,6 +36,9 @@ func can_move_to() -> Array[Vector2i]:
 func attack_targets() -> Array[Vector2i]:
 	var valid_targets: Array[Vector2i] = []
 	var direction = 1 if color == PieceColor.WHITE else -1
+	if self.reversed:
+		direction *= -1
+
 	var moves: Array[Vector2i]
 	moves = [
 		Vector2i(direction, 1), Vector2i(direction, -1),

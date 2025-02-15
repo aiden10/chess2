@@ -16,7 +16,7 @@ func game_won(winner: Piece.PieceColor) -> void:
 	get_tree().root.add_child.call_deferred(win_screen)
 	win_screen.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
-	
+
 func end_turn() -> void:
 	## Alternate between 0 and 1
 	GameState.turn = int(!bool(GameState.turn))
@@ -25,4 +25,4 @@ func end_turn() -> void:
 	print("Turn: " + Piece.PieceColor.keys()[GameState.turn])
 	
 	## Check for checkmate after each turn (i.e. after a piece has moved)
-	BoardFunctions.is_checkmate()
+	# BoardFunctions.is_checkmate()

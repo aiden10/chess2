@@ -85,7 +85,7 @@ static func populate_board() -> void:
 	for col in range(BoardState.COLS):
 		var white_pawn = Pawn.new(Piece.PieceColor.WHITE)
 		white_pawn.position = Vector2i(1, col)
-		white_pawn.primary = Abilities.heal_ability
+		white_pawn.primary = Abilities.reverse_ability
 		BoardState.board[1][col] = white_pawn
 
 	## Black pieces back row (from left to right: 0,7 to 7,7)
@@ -119,7 +119,7 @@ static func populate_board() -> void:
 	for col in range(BoardState.COLS):
 		var black_pawn = Pawn.new(Piece.PieceColor.BLACK)
 		black_pawn.position = Vector2i(6, col)
-		black_pawn.primary = Abilities.heal_ability
+		black_pawn.primary = Abilities.reverse_ability
 		BoardState.board[6][col] = black_pawn
 
 	## Assign abilty objects

@@ -52,7 +52,7 @@ Abilities:
             - Madness/Bloodlust/Frenzied: Killing ANY unit grants +1 HP and +1 ATK 
     Primaries:
         Pawn:
-            - 
+            - Reversal: Change this piece's direction
         Knight:
             - 
         Bishop:
