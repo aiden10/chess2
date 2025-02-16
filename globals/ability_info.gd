@@ -14,3 +14,8 @@ var reverse_sprite: Texture2D = load("res://resources/sprites/abilities/swirl.pn
 const reverse_description: String = "Reverse this piece's direction"
 const reverse_name: String = "Reverse"
 const reverse_cooldown: int = 3
+
+var inspire_sprite: Texture2D = load("res://resources/sprites/abilities/star.png")
+const inspire_description: String = "Charge a friendly piece's ability cooldown"
+const inspire_name: String = "Inspire"
+const inspire_cooldown: int = 6

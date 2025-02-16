@@ -31,7 +31,7 @@ Ability usage:
     Abilities will also have cooldowns, which reset after a certain number of turns. 
 
 Adding abilities:
-    Add its name, description, and texture path to ability_info.gd
+    Add its name, description, cooldown, and texture path to ability_info.gd
     Define the ability class in classes/abilities
     Create the black and white version of the ability in globals/abilities.gd
     Add both instances to their respective lists
@@ -59,12 +59,11 @@ Abilities:
         Bishop:
             - Heal: Heal a friendly adjacent piece
         Rook:
-            - Snipe/Blast: Shoot a projectile
             - Barricade: Place a Wall within attack range
         Queen:
             - 
         King:
-            - 
+            - Inspire: Charge a friendly piece's ability cooldown
     Ultimates:
         Pawn:
             - 

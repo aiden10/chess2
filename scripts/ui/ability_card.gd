@@ -13,7 +13,13 @@ extends Control
 func _ready() -> void:
 	ability_button.pressed.connect(_on_button_clicked)
 	EventBus.overlay_drawn.connect(_draw)
-	
+
+func _clear_card() -> void:
+	ability_button.texture_normal = null
+	ability_name.text = ""
+	description.text = ""
+	status.text = ""
+
 func _on_button_clicked() -> void:
 	## I either handle the pieces without abilities like this or I give the wall "dummy" abilities
 	if is_passive:
@@ -41,6 +47,11 @@ func _draw() -> void:
 	
 	## This should never be null because this will only be called when a piece is selected
 	var selected_piece: Piece = GameState.selected_piece
+
+	## Walls don't have abilities so don't show any abilities
+	if selected_piece.type == Piece.PieceType.WALL:
+		_clear_card()
+		return
 
 	if is_passive:
 		if selected_piece.passive:

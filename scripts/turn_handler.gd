@@ -17,12 +17,14 @@ func game_won(winner: Piece.PieceColor) -> void:
 	win_screen.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
 
+## What happens at the start of each turn
 func start_turn() -> void:
 	var abilities = Abilities.white_abilities + Abilities.black_abilities
 	for ability in abilities:
 		if ability.cooldown > 0:
 			ability.cooldown -= 1
 
+## What happens at the end of each turn
 func end_turn() -> void:
 	## Alternate between 0 and 1
 	GameState.turn = int(!bool(GameState.turn))
