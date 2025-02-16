@@ -19,3 +19,14 @@ var inspire_sprite: Texture2D = load("res://resources/sprites/abilities/star.png
 const inspire_description: String = "Charge a friendly piece's ability cooldown"
 const inspire_name: String = "Inspire"
 const inspire_cooldown: int = 6
+
+var swap_sprite: Texture2D = load("res://resources/sprites/abilities/wand.png")
+const swap_description: String = "Swap positions with an adjacent friendly piece"
+const swap_name: String = "Swap"
+const swap_cooldown: int = 6
+
+var buck_sprite: Texture2D = load("res://resources/sprites/abilities/sword.png")
+const buck_description: String = "Deal 3 damage to an adjacent enemy piece (safe from counterattacks)"
+const buck_name: String = "Buck"
+const buck_cooldown: int = 5
+const buck_damage: int = 3

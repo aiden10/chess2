@@ -133,13 +133,13 @@ static func populate_board() -> void:
 	black_rook1.primary = Abilities.black_barricade_ability
 	black_rook2.primary = Abilities.black_barricade_ability
 	
-	white_knight1.primary = Abilities.white_heal_ability
-	white_knight2.primary = Abilities.white_heal_ability
-	black_knight1.primary = Abilities.black_heal_ability
-	black_knight2.primary = Abilities.black_heal_ability
+	white_knight1.primary = Abilities.white_buck_ability
+	white_knight2.primary = Abilities.white_buck_ability
+	black_knight1.primary = Abilities.white_buck_ability
+	black_knight2.primary = Abilities.white_buck_ability
 	
-	white_queen.primary = Abilities.white_heal_ability
-	black_queen.primary = Abilities.black_heal_ability
+	white_queen.primary = Abilities.white_swap_ability
+	black_queen.primary = Abilities.black_swap_ability
 	
 	white_king.primary = Abilities.white_inspire_ability
 	black_king.primary = Abilities.black_inspire_ability

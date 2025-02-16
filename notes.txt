@@ -55,13 +55,13 @@ Abilities:
         Pawn:
             - Reversal: Change this piece's direction
         Knight:
-            - 
+            - Buck: Deal 3 damage to an adjacent enemy piece
         Bishop:
             - Heal: Heal a friendly adjacent piece
         Rook:
             - Barricade: Place a Wall within attack range
         Queen:
-            - 
+            - Swap: Swap positions with an adjacent friendly piece 
         King:
             - Inspire: Charge a friendly piece's ability cooldown
     Ultimates:

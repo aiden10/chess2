@@ -11,6 +11,7 @@ extends Control
 @export var is_ultimate: bool
 
 func _ready() -> void:
+	description.autowrap_mode = TextServer.AUTOWRAP_WORD
 	ability_button.pressed.connect(_on_button_clicked)
 	EventBus.overlay_drawn.connect(_draw)
 
