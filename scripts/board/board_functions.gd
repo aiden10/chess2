@@ -48,12 +48,20 @@ static func _enemy_valid_moves(side: Piece.PieceColor) -> Array[Vector2i]:
 						moves.append(move)		
 	return moves
 
+## Resets the board and game related variables such as turn
+## I figured that if it's already resetting the board it might as well reset everything
 static func reset_board() -> void:
 	for row in BoardState.board.size():
 		for col in BoardState.board[row].size():
 			BoardState.board[row][col] = null
-
+	
+	GameState.selected_piece = null
+	GameState.selected_ability = null
+	GameState.turn = 0
+	
 static func populate_board() -> void:
+	reset_board()
+	
 	## White pieces back row (from left to right: 0,0 to 7,0)
 	var white_rook1 = Rook.new(Piece.PieceColor.WHITE)
 	white_rook1.position = Vector2i(0, 0)

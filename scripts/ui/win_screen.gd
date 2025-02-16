@@ -33,16 +33,19 @@ func _resize() -> void:
 	background.custom_minimum_size = Vector2(viewport_size.x - (viewport_size.x / 2), viewport_size.y - (viewport_size.y / 2))
 	
 func _restart_game() -> void:
-	BoardFunctions.reset_board()
 	get_tree().paused = false
 	
-	# Remove the win screen.
-	queue_free()
-	
-	# Remove the old game scene.
-	if GameState.current_game_scene:
-		GameState.current_game_scene.queue_free()
-	
-	# Load and add the new game scene.
+	# Load and instance the new game scene first
 	var new_game = load("res://scenes/main.tscn").instantiate()
-	get_tree().root.add_child(new_game)
+	
+	# Get the root node
+	var root = get_tree().root
+	
+	# Add the new game scene
+	root.add_child(new_game)
+	
+	# Update current_scene reference
+	get_tree().current_scene = new_game
+	
+	# Clean up the menu scene last
+	queue_free()

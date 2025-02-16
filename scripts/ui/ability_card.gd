@@ -35,7 +35,7 @@ func _on_button_clicked() -> void:
 		else: ## Cooldown not over, deselect ability
 			GameState.selected_ability = null
 		EventBus.ability_selected.emit()
-		
+
 	elif is_ultimate:
 		## Toggle ability selection
 		if GameState.selected_ability == GameState.selected_piece.ultimate:
@@ -65,17 +65,18 @@ func _draw() -> void:
 			ability_button.texture_normal = selected_piece.primary.sprite
 			ability_name.text = selected_piece.primary.name	
 			description.text = selected_piece.primary.description
-			
 			if selected_piece.primary.cooldown == 0:
 				ability_button.disabled = false
 				ability_button.modulate = Color(1, 1, 1, 1.0)
 				status.text = "Ready"
+				ability_button.mouse_default_cursor_shape = CURSOR_POINTING_HAND
 			## Ability on cooldown
 			else:
 				ability_button.disabled = true
 				ability_button.modulate = Color(0.3, 0.3, 0.3, 0.5)
 				var t = "turn" if selected_piece.primary.cooldown == 1 else "turns"
 				status.text = "On cool down (" + str(selected_piece.primary.cooldown) + " " + t + " left)"
+				ability_button.mouse_default_cursor_shape = CURSOR_ARROW
 				
 	elif is_ultimate:
 		if selected_piece.ultimate:
@@ -86,6 +87,10 @@ func _draw() -> void:
 				ability_button.disabled = true
 				ability_button.modulate = Color(0.3, 0.3, 0.3, 0.5)
 				status.text = "Depleted"
+				ability_button.mouse_default_cursor_shape = CURSOR_ARROW
+
 			else:
 				status.text = "Ready"
+				ability_button.mouse_default_cursor_shape = CURSOR_POINTING_HAND
+
 		
