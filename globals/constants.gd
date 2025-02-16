@@ -5,7 +5,8 @@ const HOVER_COLOR_ALPHA = 0.2
 const SPRITE_SIZE: float = 1.25
 const VALID_MOVE_TILE_COLOR = Color.AQUAMARINE
 const VALID_ATTACK_TILE_COLOR = Color.CRIMSON
-
+const SERVER_URL: String = ""
+const SOCKET_URL: String = ""
 ## Could make it so that healing/damage abilities have different colors
 const VALID_ABILITY_TILE_COLOR = Color.DARK_VIOLET
 

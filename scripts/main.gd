@@ -5,3 +5,4 @@ extends Node
 func _ready() -> void:
 	BoardFunctions.populate_board()
 	boardNode.initialize()
+	GameState.is_multiplayer = false

@@ -1,9 +1,43 @@
-[gd_scene format=3 uid="uid://c6c0g4f6b27ck"]
+[gd_scene load_steps=3 format=3 uid="uid://c6c0g4f6b27ck"]
 
-[node name="CreateRoom" type="Control"]
-layout_mode = 3
+[ext_resource type="Script" path="res://scripts/ui/pages/create_room.gd" id="1_pf2nh"]
+[ext_resource type="PackedScene" uid="uid://dinr17jyi4vd5" path="res://scenes/multiplayer.tscn" id="2_h8so6"]
+
+[node name="CreateRoom" type="CenterContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_pf2nh")
+multiplayer_scene = ExtResource("2_h8so6")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Room" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Room Name: "
+
+[node name="RoomNameField" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+expand_to_text_length = true
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Password" type="Label" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+text = "Password: "
+
+[node name="PasswordField" type="LineEdit" parent="VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+expand_to_text_length = true
+
+[node name="CreateRoomButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Create Room"

@@ -5,9 +5,9 @@
 [ext_resource type="Script" path="res://globals/abilities.gd" id="2_lvmup"]
 [ext_resource type="Script" path="res://scripts/action_handler.gd" id="3_5vs0p"]
 [ext_resource type="PackedScene" uid="uid://donmyumd0j62i" path="res://scenes/ui/selected_piece_overlay.tscn" id="3_rm5m8"]
-[ext_resource type="Script" path="res://scripts/ui/selection_handler.gd" id="3_x27no"]
+[ext_resource type="Script" path="res://scripts/selection_handler.gd" id="3_x27no"]
 [ext_resource type="Script" path="res://scripts/turn_handler.gd" id="4_l87k6"]
-[ext_resource type="PackedScene" uid="uid://cytev3yefb6ei" path="res://scenes/win_screen.tscn" id="5_gshcx"]
+[ext_resource type="PackedScene" uid="uid://cytev3yefb6ei" path="res://scenes/pages/win_screen.tscn" id="5_gshcx"]
 [ext_resource type="Script" path="res://scripts/ui/pause_button.gd" id="9_2afq2"]
 [ext_resource type="PackedScene" uid="uid://dodpfgw1dbxr1" path="res://scenes/ui/pause_menu.tscn" id="10_6mehg"]
 

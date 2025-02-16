@@ -6,6 +6,11 @@ func _ready() -> void:
 ## [other_piece]: the board value at the position that was clicked
 ## [row], [col]: the x and y position of the clicked tile
 func selection_handler(other_piece: Piece, row: int, col: int) -> void:
+	## Can't select other pieces in multiplayer to keep it simple
+	if GameState.is_multiplayer and other_piece:
+		if other_piece.color != GameState.selected_piece.color:
+			return
+
 	## Check if ability used
 	if GameState.selected_ability and GameState.selected_piece and GameState.selected_piece.color == GameState.turn:
 		if Vector2i(row, col) in GameState.selected_ability.valid_tiles():

@@ -22,6 +22,7 @@ Constants="*res://globals/constants.gd"
 GameState="*res://states/game_state.gd"
 EventBus="*res://globals/event_bus.gd"
 AbilityInfo="*res://globals/ability_info.gd"
+NetworkManager="*res://globals/network_manager.gd"
 
 [dotnet]
 

@@ -11,17 +11,5 @@ Should ultimates be one time per piece or one time per ability?
 More abilities
 Castling, en passant, pawn promotions
 Multiplayer:
-    When it is your turn and you click any tile, send the BoardState and the GameState to the server
-    When the server receives an update (BoardState/GameState), it will forward it to the other player
-    When a player receives an update, the client will simply update the local BoardState and GameState and then emit a signal to redraw the board
-
-Roguelike mode:
-    Battles take place in what I currently have.
-    "Outer world" is grid based and there will be various rooms with items, shops, npcs, bosses, and enemies.
-    Navigation in the outer world will be "turn based" like traditional roguelikes.
-    When you interact with an enemy it takes you into the battle scene.
-    Enemies will have different piece configurations and different abilities/relics on their pieces.
-    Players can obtain passive items, or "relics" from item rooms, enemies, bosses, shops, or npcs.
-    Players can also obtain abilities from the same places they would obtain relics.
-    Before a battle, players can assign abilities that they obtain to their pieces.
-    A players pieces all start with no abilities.
+    State serialization and deserialization
+    Indicator when player joins

@@ -1,0 +1,45 @@
+[gd_scene load_steps=11 format=3 uid="uid://dinr17jyi4vd5"]
+
+[ext_resource type="Script" path="res://scripts/multiplayer_main.gd" id="1_wie2d"]
+[ext_resource type="Script" path="res://globals/abilities.gd" id="2_ba2iw"]
+[ext_resource type="Script" path="res://scripts/action_handler.gd" id="3_h6x20"]
+[ext_resource type="Script" path="res://scripts/turn_handler.gd" id="4_gvk80"]
+[ext_resource type="PackedScene" uid="uid://cytev3yefb6ei" path="res://scenes/pages/win_screen.tscn" id="5_byt5f"]
+[ext_resource type="PackedScene" uid="uid://rsfxt6ecf6k3" path="res://scenes/board.tscn" id="6_03yrp"]
+[ext_resource type="Script" path="res://scripts/selection_handler.gd" id="7_l5q6m"]
+[ext_resource type="PackedScene" uid="uid://donmyumd0j62i" path="res://scenes/ui/selected_piece_overlay.tscn" id="8_gtc7t"]
+[ext_resource type="Script" path="res://scripts/ui/pause_button.gd" id="9_far4u"]
+[ext_resource type="PackedScene" uid="uid://dodpfgw1dbxr1" path="res://scenes/ui/pause_menu.tscn" id="10_tuq53"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_wie2d")
+
+[node name="AbilitiesLoader" type="Node" parent="."]
+script = ExtResource("2_ba2iw")
+
+[node name="ActionHandler" type="Node" parent="."]
+script = ExtResource("3_h6x20")
+
+[node name="TurnHandler" type="Node" parent="."]
+script = ExtResource("4_gvk80")
+win_screen_scene = ExtResource("5_byt5f")
+
+[node name="Board" parent="." instance=ExtResource("6_03yrp")]
+
+[node name="SelectionHandler" type="Node" parent="Board"]
+script = ExtResource("7_l5q6m")
+
+[node name="SelectedPieceOverlay" parent="." instance=ExtResource("8_gtc7t")]
+
+[node name="PauseButton" type="TextureButton" parent="."]
+custom_minimum_size = Vector2(10, 10)
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -10.0
+offset_bottom = 10.0
+grow_horizontal = 0
+stretch_mode = 4
+script = ExtResource("9_far4u")
+paused_scene = ExtResource("10_tuq53")
+target_size = Vector2(32, 32)
