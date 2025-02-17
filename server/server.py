@@ -56,32 +56,42 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             if not player:
+                print("Attempting authentication...")
                 # Handle authentication
                 try:
+                    print("Awaiting room info...")
                     room_info = await websocket.receive_json()
                     room_name = room_info["room_name"]
                     password = room_info["password"]
-                    
+                    print("Attempting to connect...")
                     if room_name not in rooms:
                         await websocket.send_json({"type": "error", "message": "Room not found"})
-                        continue
+                        print("Room not found")
+                        await websocket.close()
+                        return
                         
                     room = rooms[room_name]
                     if room.password != password:
-                        print("invalid password")
                         await websocket.send_json({"type": "error", "message": "Invalid password"})
-                        continue
+                        print("Invalid password")
+                        await websocket.close()
+                        return
                         
                     if len(room.players) >= 2:
                         await websocket.send_json({"type": "error", "message": "Room is full"})
-                        continue
+                        print("Room full")
+                        await websocket.close()
+                        return
                     
+                    print("Creating player")
+
                     # Create and add player
                     player = Player(websocket, room_name)
                     room.players.append(player)
                     player.color = room.get_player_color(player)
                     
                     # Send initial state
+                    print("Connected")
                     await websocket.send_json({
                         "type": "connected",
                         "color": player.color,
@@ -91,12 +101,14 @@ async def websocket_endpoint(websocket: WebSocket):
                     
                     # If room is full, start the game
                     if len(room.players) == 2:
+                        print("Starting game...")
                         await room.broadcast({
                             "type": "game_start",
                             "game_state": room.game_state
                         })
                         
                 except json.JSONDecodeError:
+                    print("Invalid JSON")
                     await websocket.send_json({"type": "error", "message": "Invalid JSON"})
                     continue
                     
@@ -104,7 +116,6 @@ async def websocket_endpoint(websocket: WebSocket):
             else:
                 data = await websocket.receive_json()
                 if data["game_state"] != room.game_state or data["board_state"] != room.board_state:
-                    print(data)
                     # Update game state
                     room.game_state = data["game_state"]
                     room.board_state = data["board_state"]
@@ -125,31 +136,32 @@ async def websocket_endpoint(websocket: WebSocket):
                     "message": f"Player {player.color} disconnected"
                 })
             # Delete the room if it becomes empty
-            # if len(room.players) < 1:
-            #     del rooms[room.name]
+            if len(room.players) < 1:
+                del rooms[room.name]
 
 @app.post("/create_room")
 async def create_room(request: dict):
+    print(f"Rooms: {rooms}")
     try:
         name = request["name"]
         password = request["password"]
         
         if name in rooms:
             return JSONResponse(
-                content={"message": "Room already exists"},
+                content={"type": "error", "message": "Room already exists"},
                 status_code=400
             )
             
         room = Room(name, password)
         rooms[name] = room
         return JSONResponse(
-            content={"message": "Room created successfully"},
+            content={"type": "success", "message": "Room created successfully"},
             status_code=200
         )
         
     except Exception as e:
         return JSONResponse(
-            content={"message": str(e)},
+            content={"type": "error", "message": str(e)},
             status_code=400
         )
 
@@ -165,8 +177,6 @@ async def get_rooms():
     return JSONResponse(content={"rooms": room_list})
 
 def start_server():
-    test_room = Room("test", "pass")
-    rooms.update({test_room.name: test_room})
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
 if __name__ == '__main__':

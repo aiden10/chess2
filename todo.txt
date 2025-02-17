@@ -11,6 +11,4 @@ Should ultimates be one time per piece or one time per ability?
 More abilities
 Castling, en passant, pawn promotions
 Multiplayer:
-    Handling ability cooldowns
     Showing what the opponent did
-    Room browser errors

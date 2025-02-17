@@ -101,6 +101,8 @@ func deserialize_board_state(board_state: Dictionary):
 	EventBus.piece_selected.emit()
 	
 func connect_to_room(room_name: String, password: String) -> bool:
+	close_connection()
+	
 	room_info = {
 		"room_name": room_name,
 		"password": password
@@ -112,7 +114,7 @@ func connect_to_room(room_name: String, password: String) -> bool:
 	if err != OK:
 		connection_error.emit("Failed to connect to server")
 		return false
-			
+
 	# Start processing socket state
 	set_process(true)
 	return true
@@ -134,6 +136,7 @@ func close_connection() -> void:
 		GameState.players_ready = false
 		GameState.player_color = 0
 		socket = null  # Clear the socket reference
+		is_connected = false
 		
 func _process(_delta: float) -> void:
 	if not socket:
@@ -153,7 +156,6 @@ func _process(_delta: float) -> void:
 			while socket.get_available_packet_count():
 				var packet = socket.get_packet()
 				var data = JSON.parse_string(packet.get_string_from_utf8())
-				
 				match data["type"]:
 					"connected":
 						connection_established.emit(data["color"])
@@ -174,6 +176,7 @@ func _process(_delta: float) -> void:
 					
 					"error":
 						connection_error.emit(data["message"])
+						print("error: ", data["message"])
 						close_connection()
 						return
 						
