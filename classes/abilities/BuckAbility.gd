@@ -6,6 +6,7 @@ func _init() -> void:
 	name = AbilityInfo.buck_name
 	description = AbilityInfo.buck_description
 	cooldown = 0
+	cooldown_duration = AbilityInfo.buck_cooldown
 
 ## Basing the position off of the selected piece because in order to use an ability
 ## you need to have that piece selected
@@ -27,4 +28,4 @@ func activate(row: int, col: int) -> void:
 		var dead = target.take_damage(AbilityInfo.buck_damage)
 		if dead:
 			BoardState.board[row][col] = null
-		cooldown = AbilityInfo.buck_cooldown
+		reset_cooldown()

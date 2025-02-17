@@ -44,11 +44,11 @@ func _on_button_clicked() -> void:
 			GameState.selected_ability = GameState.selected_piece.ultimate
 		EventBus.ability_selected.emit()
 
-func _draw() -> void:
-	
-	## This should never be null because this will only be called when a piece is selected
+func _draw() -> void:	
 	var selected_piece: Piece = GameState.selected_piece
-
+	if selected_piece == null:
+		return
+		
 	## Walls don't have abilities so don't show any abilities
 	if selected_piece.type == Piece.PieceType.WALL:
 		_clear_card()

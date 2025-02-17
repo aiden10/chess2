@@ -124,6 +124,9 @@ async def websocket_endpoint(websocket: WebSocket):
                     "type": "player_disconnected",
                     "message": f"Player {player.color} disconnected"
                 })
+            # Delete the room if it becomes empty
+            # if len(room.players) < 1:
+            #     del rooms[room.name]
 
 @app.post("/create_room")
 async def create_room(request: dict):

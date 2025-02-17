@@ -5,6 +5,7 @@ func _init() -> void:
 	sprite = AbilityInfo.swap_sprite
 	name = AbilityInfo.swap_name
 	description = AbilityInfo.swap_description
+	cooldown_duration = AbilityInfo.swap_cooldown
 	cooldown = 0
 	
 ## Basing the position off of the selected piece because in order to use an ability
@@ -30,5 +31,4 @@ func activate(row: int, col: int) -> void:
 		BoardState.board[GameState.selected_piece.position.x][GameState.selected_piece.position.y] = target
 		target.position = GameState.selected_piece.position
 		GameState.selected_piece.position = temp
-		
-		cooldown = AbilityInfo.swap_cooldown
+		reset_cooldown()

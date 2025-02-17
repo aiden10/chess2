@@ -8,7 +8,7 @@ func _ready() -> void:
 	NetworkManager.state_updated.connect(_on_state_updated)
 	NetworkManager.game_started.connect(_on_game_started)
 	NetworkManager.player_disconnected.connect(_on_player_disconnected)
-	EventBus.piece_selected.connect(_selection_made)
+	EventBus.turn_started.connect(_selection_made)
 	GameState.is_multiplayer = true
 
 ## When the other player does something
@@ -24,10 +24,7 @@ func _on_player_disconnected(message: String) -> void:
 
 ## When you do something
 func _selection_made() -> void:
-	print(GameState.selected_piece)
-	if GameState.selected_piece:
-		if GameState.selected_piece.color == GameState.player_color:
-			var game_state = NetworkManager.serialize_game_state()
-			var board_state = NetworkManager.serialize_board_state()
-			NetworkManager.send_game_state(game_state, board_state)
+	var board_state = NetworkManager.serialize_board_state()
+	var game_state = NetworkManager.serialize_game_state()
+	NetworkManager.send_game_state(game_state, board_state)
 			

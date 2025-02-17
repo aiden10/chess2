@@ -39,6 +39,7 @@ func join(room_name: String, password: String) -> void:
 	var result: bool = NetworkManager.connect_to_room(room_name, password)
 	if not result:
 		print("Invalid password")
+		NetworkManager.close_connection()
 		
 func _on_connection_established(player_color: int) -> void:
 	print("Connected as ", player_color)

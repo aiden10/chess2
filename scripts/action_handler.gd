@@ -9,7 +9,7 @@ func selection_handler(other_piece: Piece, row: int, col: int) -> void:
 
 	## Can't select other pieces in multiplayer to keep it simple and can't select anything until both players join
 	if GameState.is_multiplayer and other_piece:
-		if GameState.player_count < 2:
+		if not GameState.players_ready:
 			print("not two players")
 			return
 	
@@ -17,8 +17,10 @@ func selection_handler(other_piece: Piece, row: int, col: int) -> void:
 	if GameState.selected_ability and GameState.selected_piece and GameState.selected_piece.color == GameState.turn:
 		if Vector2i(row, col) in GameState.selected_ability.valid_tiles():
 			GameState.selected_ability.activate(row, col)
+			GameState.used_ability_name = GameState.selected_ability.name
 			EventBus.turn_ended.emit()
 			return
+			
 	GameState.selected_ability = null
 	
 	## Basically just toggling the selection
@@ -54,7 +56,7 @@ func kill_events(attacker: Piece, victim: Piece) -> void:
 func move(other_piece: Piece, row: int, col: int) -> void:
 	if Vector2i(row, col) in GameState.selected_piece.can_move_to():
 		## Can't move enemy pieces
-		if GameState.selected_piece.color != GameState.player_color:
+		if GameState.selected_piece.color != GameState.player_color and GameState.is_multiplayer:
 			return
 		## Update board to the new piece's position
 		BoardState.board[row][col] = GameState.selected_piece
@@ -70,7 +72,7 @@ func attack(other_piece: Piece, row: int, col: int) -> void:
 	if selected_piece and other_piece:
 		if Vector2i(row, col) in selected_piece.attack_targets():
 			## Can't attack for your enemy's pieces
-			if GameState.selected_piece.color != GameState.player_color:
+			if GameState.selected_piece.color != GameState.player_color and GameState.is_multiplayer:
 				return
 
 			var prev_position = selected_piece.position

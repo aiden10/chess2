@@ -5,6 +5,7 @@ var sprite: Texture2D
 var name: String
 var description: String
 var cooldown: int
+var cooldown_duration: int
 var used: bool
 
 # Abstract methods that child classes must implement
@@ -19,5 +20,8 @@ func is_in_bounds(pos: Vector2i) -> bool:
 	return (pos.x >= 0 and pos.x < BoardState.COLS and 
 			pos.y >= 0 and pos.y < BoardState.ROWS)
 			
+func reset_cooldown() -> void:
+	cooldown = cooldown_duration
+
 func _to_string() -> String:
 	return name

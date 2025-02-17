@@ -5,6 +5,7 @@ func _init() -> void:
 	sprite = AbilityInfo.heal_sprite
 	name = AbilityInfo.heal_name
 	description = AbilityInfo.heal_description
+	cooldown_duration = AbilityInfo.heal_cooldown
 	cooldown = 0
 	
 ## Basing the position off of the selected piece because in order to use an ability
@@ -28,4 +29,5 @@ func activate(row: int, col: int) -> void:
 	var target = BoardState.board[row][col]
 	if target:
 		target.health = min(target.health + 2, target.max_health)
-		cooldown = AbilityInfo.heal_cooldown
+		reset_cooldown()
+		

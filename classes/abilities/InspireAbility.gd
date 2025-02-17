@@ -5,6 +5,7 @@ func _init() -> void:
 	sprite = AbilityInfo.inspire_sprite
 	name = AbilityInfo.inspire_name
 	description = AbilityInfo.inspire_description
+	cooldown_duration = AbilityInfo.inspire_cooldown
 	cooldown = 0
 	
 ## Basing the position off of the selected piece because in order to use an ability
@@ -26,4 +27,4 @@ func activate(row: int, col: int) -> void:
 	var target: Piece = BoardState.board[row][col]
 	if target:
 		target.primary.cooldown = 0
-		cooldown = AbilityInfo.inspire_cooldown
+		reset_cooldown()

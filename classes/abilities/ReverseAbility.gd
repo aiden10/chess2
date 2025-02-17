@@ -5,6 +5,7 @@ func _init() -> void:
 	sprite = AbilityInfo.reverse_sprite
 	name = AbilityInfo.reverse_name
 	description = AbilityInfo.reverse_description
+	cooldown_duration = AbilityInfo.reverse_cooldown
 	cooldown = 0
 
 ## Basing the position off of the selected piece because in order to use an ability
@@ -18,4 +19,4 @@ func activate(row: int, col: int) -> void:
 	if target:
 		if target.type == Piece.PieceType.PAWN:
 			target.reversed = not target.reversed
-			cooldown = AbilityInfo.reverse_cooldown
+			reset_cooldown()

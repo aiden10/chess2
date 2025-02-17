@@ -11,5 +11,6 @@ Should ultimates be one time per piece or one time per ability?
 More abilities
 Castling, en passant, pawn promotions
 Multiplayer:
-    State serialization and deserialization
-    Indicator when player joins
+    Handling ability cooldowns
+    Showing what the opponent did
+    Room browser errors

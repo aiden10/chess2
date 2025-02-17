@@ -53,6 +53,7 @@ func serialize() -> Dictionary:
 	var passive_name = passive.name if passive != null else null
 	var primary_name = primary.name if primary != null else null
 	var ultimate_name = ultimate.name if ultimate != null else null
+	var reverse = self.reversed if type == PieceType.PAWN else false
 	return {
 		"position_x": position.x,
 		"position_y": position.y,
@@ -60,5 +61,8 @@ func serialize() -> Dictionary:
 		"type": type,
 		"passive_name": passive_name,
 		"primary_name": primary_name,
-		"ultimate_name": ultimate_name
+		"ultimate_name": ultimate_name,
+		"has_moved": has_moved,
+		"health": health,
+		"reversed": reverse
  	}

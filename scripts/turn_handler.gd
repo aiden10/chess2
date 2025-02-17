@@ -5,7 +5,7 @@ extends Node
 func _ready() -> void:
 	EventBus.game_won.connect(game_won)
 	EventBus.turn_ended.connect(end_turn)
-
+	
 func game_won(winner: Piece.PieceColor) -> void:
 	if winner == Piece.PieceColor.WHITE:
 		GameState.winner = "White"
@@ -23,6 +23,7 @@ func start_turn() -> void:
 	for ability in abilities:
 		if ability.cooldown > 0:
 			ability.cooldown -= 1
+	EventBus.turn_started.emit()
 
 ## What happens at the end of each turn
 func end_turn() -> void:
