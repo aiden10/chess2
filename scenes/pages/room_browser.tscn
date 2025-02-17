@@ -1,9 +1,64 @@
-[gd_scene format=3 uid="uid://bucllqgfuprtc"]
+[gd_scene load_steps=8 format=3 uid="uid://bucllqgfuprtc"]
 
-[node name="RoomBrowser" type="Control"]
-layout_mode = 3
+[ext_resource type="Script" path="res://scripts/ui/pages/room_browser.gd" id="1_443mq"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_q43ye"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d18qa"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h2a7d"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7i1jm"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vdecx"]
+
+[sub_resource type="Theme" id="Theme_7pga2"]
+VScrollBar/styles/grabber = SubResource("StyleBoxEmpty_q43ye")
+VScrollBar/styles/grabber_highlight = SubResource("StyleBoxEmpty_d18qa")
+VScrollBar/styles/grabber_pressed = SubResource("StyleBoxEmpty_h2a7d")
+VScrollBar/styles/scroll = SubResource("StyleBoxEmpty_7i1jm")
+VScrollBar/styles/scroll_focus = SubResource("StyleBoxEmpty_vdecx")
+
+[node name="RoomBrowser" type="CenterContainer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = -24.0
+offset_right = -2.0
+offset_bottom = -24.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_443mq")
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+custom_minimum_size = Vector2(100, 100)
+layout_mode = 2
+size_flags_vertical = 3
+theme = SubResource("Theme_7pga2")
+
+[node name="RoomContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+
+[node name="JoinButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Join"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Password: "
+
+[node name="PasswordField" type="LineEdit" parent="VBoxContainer/HBoxContainer"]
+layout_mode = 2

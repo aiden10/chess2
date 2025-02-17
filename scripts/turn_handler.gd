@@ -19,7 +19,7 @@ func game_won(winner: Piece.PieceColor) -> void:
 
 ## What happens at the start of each turn
 func start_turn() -> void:
-	var abilities = Abilities.white_abilities + Abilities.black_abilities
+	var abilities = Abilities.white_abilities.values() + Abilities.black_abilities.values()
 	for ability in abilities:
 		if ability.cooldown > 0:
 			ability.cooldown -= 1

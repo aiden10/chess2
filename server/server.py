@@ -1,9 +1,18 @@
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
 from typing import List, Dict, Optional
 import json
+import uvicorn
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # replace with the frontend url/domain after
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class Room:
     def __init__(self, name: str, password: str):
@@ -59,6 +68,7 @@ async def websocket_endpoint(websocket: WebSocket):
                         
                     room = rooms[room_name]
                     if room.password != password:
+                        print("invalid password")
                         await websocket.send_json({"type": "error", "message": "Invalid password"})
                         continue
                         
@@ -153,3 +163,11 @@ async def get_rooms():
         for room in rooms.values()
     ]
     return JSONResponse(content={"rooms": room_list})
+
+def start_server():
+    test_room = Room("test", "pass")
+    rooms.update({test_room.name: test_room})
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+if __name__ == '__main__':
+    start_server()

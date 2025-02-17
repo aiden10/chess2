@@ -8,15 +8,15 @@ extends CenterContainer
 @export var browser_scene: PackedScene
 
 func _ready() -> void:
-	local_play_button.pressed.connect(func(): switch_scene(local_play_scene))
-	create_room_button.pressed.connect(func(): switch_scene(create_room_scene))
-	browser_button.pressed.connect(func(): switch_scene(browser_scene))
+	local_play_button.pressed.connect(initialize_local_play_scene)
+	create_room_button.pressed.connect(initialize_create_room_scene)
+	browser_button.pressed.connect(initialize_browser_scene)
 	
-func switch_scene(scene: PackedScene) -> void:
-	get_tree().paused = false	
-	var new_scene = scene.instantiate()	
-	var root = get_tree().root	
-	root.add_child(new_scene)
-	get_tree().current_scene = new_scene
-	queue_free()
-		
+func initialize_local_play_scene() -> void:
+	get_tree().change_scene_to_file("res://scenes/main.tscn")
+
+func initialize_create_room_scene() -> void:
+	get_tree().change_scene_to_file("res://scenes/pages/create_room.tscn")
+	
+func initialize_browser_scene() -> void:
+	get_tree().change_scene_to_file("res://scenes/pages/room_browser.tscn")

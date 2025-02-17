@@ -55,12 +55,13 @@ static func reset_board() -> void:
 		for col in BoardState.board[row].size():
 			BoardState.board[row][col] = null
 	
+static func populate_board() -> void:
+	reset_board()
+	
+	## Feels like a side effect
 	GameState.selected_piece = null
 	GameState.selected_ability = null
 	GameState.turn = 0
-	
-static func populate_board() -> void:
-	reset_board()
 	
 	## White pieces back row (from left to right: 0,0 to 7,0)
 	var white_rook1 = Rook.new(Piece.PieceColor.WHITE)

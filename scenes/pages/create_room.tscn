@@ -16,6 +16,10 @@ multiplayer_scene = ExtResource("2_h8so6")
 layout_mode = 2
 theme_override_constants/separation = 10
 
+[node name="BackButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Back"
+
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
 layout_mode = 2
 

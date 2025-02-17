@@ -5,10 +5,20 @@ const HOVER_COLOR_ALPHA = 0.2
 const SPRITE_SIZE: float = 1.25
 const VALID_MOVE_TILE_COLOR = Color.AQUAMARINE
 const VALID_ATTACK_TILE_COLOR = Color.CRIMSON
-const SERVER_URL: String = ""
-const SOCKET_URL: String = ""
-## Could make it so that healing/damage abilities have different colors
 const VALID_ABILITY_TILE_COLOR = Color.DARK_VIOLET
+
+const SERVER_URL: String = "http://127.0.0.1:8000/"
+const SOCKET_URL: String = "ws://127.0.0.1:8000/ws"
+
+var pieces_dict = {
+	0: Pawn,
+	1: Rook,
+	2: Knight,
+	3: Bishop,
+	4: Queen,
+	5: King,
+	6: Wall
+}
 
 const PAWN_HP = 2
 const PAWN_STRENGTH = 1

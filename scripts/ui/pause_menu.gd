@@ -6,7 +6,6 @@ extends CenterContainer
 @onready var tween: Tween
 
 @export var transition_speed: float = 0.3
-@export var main_menu_scene: PackedScene
 
 func _ready() -> void:
 	get_tree().root.size_changed.connect(_resize)
@@ -28,28 +27,18 @@ func _unpause() -> void:
 	
 func return_to_menu() -> void:
 	get_tree().paused = false
+	var menu_instance = load("res://scenes/pages/main_menu.tscn").instantiate()
+	var root = get_tree().root
+	var current_scene = get_tree().current_scene
+	root.add_child(menu_instance)
+	get_tree().current_scene = menu_instance
+	queue_free()  # Remove pause menu first
+	if is_instance_valid(current_scene):
+		current_scene.queue_free()  # Then remove the game scene
 	
-	if main_menu_scene:
-		# Instance the main menu first
-		var menu_instance = main_menu_scene.instantiate()
-		
-		# Get the root node
-		var root = get_tree().root
-		
-		# Get the current game scene (should be the second to last child of root)
-		var current_scene = get_tree().current_scene
-		
-		# Add the menu instance to root
-		root.add_child(menu_instance)
-		
-		# Update the current scene reference
-		get_tree().current_scene = menu_instance
-		
-		# Clean up
-		queue_free()  # Remove pause menu first
-		if is_instance_valid(current_scene):
-			current_scene.queue_free()  # Then remove the game scene
-					
+	## Close socket when you exit
+	NetworkManager.close_connection()
+			
 func _resize() -> void:
 	var viewport_size = get_viewport_rect().size
 	

@@ -48,3 +48,17 @@ func attack_targets() -> Array[Vector2i]:
 
 func _to_string() -> String:
 	return str(PieceColor.keys()[color]) + " " + str(PieceType.keys()[type])
+
+func serialize() -> Dictionary:
+	var passive_name = passive.name if passive != null else null
+	var primary_name = primary.name if primary != null else null
+	var ultimate_name = ultimate.name if ultimate != null else null
+	return {
+		"position_x": position.x,
+		"position_y": position.y,
+		"color": color,
+		"type": type,
+		"passive_name": passive_name,
+		"primary_name": primary_name,
+		"ultimate_name": ultimate_name
+ 	}
