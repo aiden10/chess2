@@ -153,3 +153,21 @@ static func populate_board() -> void:
 	white_king.primary = Abilities.white_inspire_ability
 	black_king.primary = Abilities.black_inspire_ability
 	
+static func print_board() -> void:
+	var piece_symbols = {
+		"BLACK KING": "♔", "BLACK QUEEN": "♕", "BLACK ROOK": "♖",
+		"BLACK BISHOP": "♗", "BLACK KNIGHT": "♘", "BLACK PAWN": "♙",
+		"WHITE KING": "♚", "WHITE QUEEN": "♛", "WHITE ROOK": "♜",
+		"WHITE BISHOP": "♝", "WHITE KNIGHT": "♞", "WHITE PAWN": "♟"
+	}
+	
+	for row in BoardState.board.size():
+		var row_str = ""
+		for col in BoardState.board[row].size():
+			var piece: Piece = BoardState.board[row][col]
+			if piece:
+				var piece_string = piece._to_string() # Ex: "BLACK PAWN" or "WHITE ROOK"
+				row_str += piece_symbols.get(piece_string, "?") + " "
+			else:
+				row_str += ". "  # Empty square
+		print(row_str)

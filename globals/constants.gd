@@ -11,13 +11,13 @@ const SERVER_URL: String = "http://127.0.0.1:8000/"
 const SOCKET_URL: String = "ws://127.0.0.1:8000/ws"
 
 var pieces_dict = {
-	0: Pawn,
-	1: Rook,
-	2: Knight,
-	3: Bishop,
-	4: Queen,
-	5: King,
-	6: Wall
+	Piece.PieceType.PAWN: Pawn,
+	Piece.PieceType.ROOK: Rook,
+	Piece.PieceType.KNIGHT: Knight,
+	Piece.PieceType.BISHOP: Bishop,
+	Piece.PieceType.QUEEN: Queen,
+	Piece.PieceType.KING: King,
+	Piece.PieceType.WALL: Wall
 }
 
 const PAWN_HP = 2

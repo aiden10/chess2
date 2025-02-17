@@ -45,6 +45,7 @@ func deserialize_game_state(game_state: Dictionary):
 	GameState.turn = game_state["turn"]
 	var x = game_state["selected_x"]
 	var y = game_state["selected_y"]
+	print("selected tile: (", x, ", ", y, ")", " Player: ", GameState.player_color)
 	var ability_type = game_state["ability_type"]
 	var piece: Piece = BoardState.board[x][y]
 	GameState.selected_piece = piece
@@ -59,7 +60,7 @@ func deserialize_game_state(game_state: Dictionary):
 	## Redraw board
 	EventBus.piece_selected.emit()
 	EventBus.ability_selected.emit()
-	
+
 func deserialize_board_state(board_state: Dictionary):
 	var board = board_state["board_state"]
 	BoardFunctions.reset_board()
@@ -76,14 +77,15 @@ func deserialize_board_state(board_state: Dictionary):
 				var piece_primary_name = piece_data["primary_name"]
 				var piece_passive_name = piece_data["passive_name"]
 				var piece_ultimate_name = piece_data["ultimate_name"]
-				var piece_primary = Abilities.black_abilities[piece_primary_name] if piece_color == 1 else Abilities.white_abilities[piece_primary_name]
+				if piece_primary_name:
+					var piece_primary = Abilities.black_abilities[piece_primary_name] if piece_color == 1 else Abilities.white_abilities[piece_primary_name]
 				if piece_passive_name:
 					var piece_passive = Abilities.passive_abilities[piece_ultimate_name]
 				if piece_ultimate_name:
 					var piece_ultimate = Abilities.black_ultimate_abilities[piece_ultimate_name] if piece_color == 1 else Abilities.white_ultimate_abilities[piece_ultimate_name]
-				new_piece = Constants.pieces_dict[piece_type].new(piece_color)
+				new_piece = Constants.pieces_dict[int(piece_type)].new(piece_color)
 				BoardState.board[row][col] = new_piece
-				
+
 	## Redraw board
 	EventBus.piece_selected.emit()
 	
@@ -109,7 +111,6 @@ func send_game_state(game_state: Dictionary, board_state: Dictionary) -> void:
 		return
 		
 	var data = {
-		"type": "move",
 		"game_state": game_state,
 		"board_state": board_state
 	}
@@ -141,7 +142,6 @@ func _process(_delta: float) -> void:
 			while socket.get_available_packet_count():
 				var packet = socket.get_packet()
 				var data = JSON.parse_string(packet.get_string_from_utf8())
-				print(data)
 				
 				match data["type"]:
 					"connected":
@@ -152,8 +152,8 @@ func _process(_delta: float) -> void:
 							state_updated.emit(data["game_state"], data["board_state"])
 					
 					"game_start":
+						GameState.player_count += 1
 						game_started.emit()
-						state_updated.emit(data["game_state"], {})
 					
 					"state_update":
 						state_updated.emit(data["game_state"], data["board_state"])

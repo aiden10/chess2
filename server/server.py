@@ -103,11 +103,8 @@ async def websocket_endpoint(websocket: WebSocket):
             # Handle actual game 
             else:
                 data = await websocket.receive_json()
-                if data["type"] == "move":
-                    if room.game_state["turn"] != player.color:
-                        await websocket.send_json({"type": "error", "message": "Not your turn"})
-                        continue
-
+                if data["game_state"] != room.game_state or data["board_state"] != room.board_state:
+                    print(data)
                     # Update game state
                     room.game_state = data["game_state"]
                     room.board_state = data["board_state"]
@@ -118,7 +115,7 @@ async def websocket_endpoint(websocket: WebSocket):
                         "game_state": room.game_state,
                         "board_state": room.board_state
                     })
-                    
+        
     except WebSocketDisconnect:
         if player and room:
             room.players.remove(player)

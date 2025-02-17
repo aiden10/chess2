@@ -9,7 +9,8 @@ func selection_handler(other_piece: Piece, row: int, col: int) -> void:
 
 	## Can't select other pieces in multiplayer to keep it simple and can't select anything until both players join
 	if GameState.is_multiplayer and other_piece:
-		if other_piece.color != GameState.player_color or GameState.player_count < 2:
+		if GameState.player_count < 2:
+			print("not two players")
 			return
 	
 	## Check if ability used
@@ -52,6 +53,9 @@ func kill_events(attacker: Piece, victim: Piece) -> void:
 ## [row], [col]: the x and y position of the clicked tile
 func move(other_piece: Piece, row: int, col: int) -> void:
 	if Vector2i(row, col) in GameState.selected_piece.can_move_to():
+		## Can't move enemy pieces
+		if GameState.selected_piece.color != GameState.player_color:
+			return
 		## Update board to the new piece's position
 		BoardState.board[row][col] = GameState.selected_piece
 		BoardState.board[GameState.selected_piece.position.x][GameState.selected_piece.position.y] = null
@@ -65,6 +69,10 @@ func attack(other_piece: Piece, row: int, col: int) -> void:
 	var selected_piece: Piece = GameState.selected_piece
 	if selected_piece and other_piece:
 		if Vector2i(row, col) in selected_piece.attack_targets():
+			## Can't attack for your enemy's pieces
+			if GameState.selected_piece.color != GameState.player_color:
+				return
+
 			var prev_position = selected_piece.position
 			
 			## Calculate if this is a mutual attack

@@ -7,4 +7,4 @@ var winner: String
 
 var player_color: int
 var is_multiplayer: bool
-var player_count: int
+var player_count: int = 0

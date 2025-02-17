@@ -13,10 +13,8 @@ func _ready() -> void:
 
 ## When the other player does something
 func _on_state_updated(game_state: Dictionary, board_state: Dictionary) -> void:
-	NetworkManager.deserialize_game_state(game_state)
 	NetworkManager.deserialize_board_state(board_state)
-	GameState.current_turn = game_state["current_turn"]
-	EventBus.piece_selected.emit()
+	NetworkManager.deserialize_game_state(game_state)
 
 func _on_game_started() -> void:
 	print("Game started")
@@ -26,6 +24,7 @@ func _on_player_disconnected(message: String) -> void:
 
 ## When you do something
 func _selection_made() -> void:
+	print(GameState.selected_piece)
 	if GameState.selected_piece:
 		if GameState.selected_piece.color == GameState.player_color:
 			var game_state = NetworkManager.serialize_game_state()
